@@ -27,9 +27,6 @@
         >
       </div>
     </article>
-    <article v-else>
-      <p>{{ content }}</p>
-    </article>
     <button
       type="submit"
     >
@@ -93,6 +90,8 @@ export default {
           throw new Error(res.error);
         }
 
+        this.res = await r.json();
+
         if (this.setUsername) {
           const text = await r.text();
           const res = text ? JSON.parse(text) : {user: null};
@@ -101,6 +100,10 @@ export default {
 
         if (this.refreshFreets) {
           this.$store.commit('refreshFreets');
+        }
+
+        if (this.refreshCustomFilters) {
+          this.$store.commit('refreshCustomFilters');
         }
 
         if (this.callback) {

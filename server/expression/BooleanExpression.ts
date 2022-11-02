@@ -37,7 +37,11 @@ export class TagExpression implements BooleanExpression {
     }
     
     public async freetIds(): Promise<Array<Types.ObjectId>> {
-        return (await TagCollection.findOne(this.label)).freetIds;
+        const tag = await TagCollection.findOne(this.label);
+        if (!tag) {
+            return [];
+        }
+        return tag.freetIds;
     }
     
     public toString(): string {

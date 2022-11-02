@@ -67,6 +67,10 @@ router.get(
 		}
 
 		const followees = await FollowCollection.findAllFollowees(req.session.userId);
+		if (followees.length === 0) {
+			res.status(200).json([]);
+			return;
+		}
 		const authorExprs: Array<BooleanExpression> = followees.map((follow) => new AuthorExpression(follow.followeeId._id.toString()));
 		const booleanExpr = authorExprs.reduce((sofar, authorExpr) => new OrExpression(sofar, authorExpr));
 		const freetIds = await booleanExpr.freetIds();

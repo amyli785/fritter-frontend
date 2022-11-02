@@ -4,12 +4,18 @@ import createPersistedState from 'vuex-persistedstate';
 
 Vue.use(Vuex);
 
+const filterAll = { name: 'All', _id: '' };
+const filterFollowing = { name: 'Following', _id: 'following' };
+
 /**
  * Storage for data that needs to be accessed from various compoentns.
  */
 const store = new Vuex.Store({
   state: {
-    filter: null, // Username to filter shown freets by (null = show all)
+    filterAll: filterAll,
+    filterFollowing: filterFollowing,
+    customFilters: [],
+    currentFilter: filterAll,
     freets: [], // All freets created in the app
     username: null, // Username of the logged in user
     alerts: {} // global success/error messages encountered during submissions to non-visible forms
@@ -31,12 +37,25 @@ const store = new Vuex.Store({
        */
       state.username = username;
     },
-    updateFilter(state, filter) {
+    updateCurrentFilter(state, currentFilter) {
       /**
-       * Update the stored freets filter to the specified one.
-       * @param filter - Username of the user to fitler freets by
+       * TODO
        */
-      state.filter = filter;
+      state.currentFilter = currentFilter;
+    },
+    updateCustomFilters(state, customFilters) {
+      /**
+       * TODO
+       */
+      state.customFilters = customFilters;
+    },
+    async refreshCustomFilters(state) {
+      /**
+       * TODO
+       */
+      const url = '/api/filters';
+      const res = await fetch(url).then(async r => r.json());
+      state.customFilters = res;
     },
     updateFreets(state, freets) {
       /**
@@ -49,7 +68,7 @@ const store = new Vuex.Store({
       /**
        * Request the server for the currently available freets.
        */
-      const url = state.filter ? `/api/users/${state.filter}/freets` : '/api/freets';
+      const url = state.currentFilter._id ? `/api/feed/${state.currentFilter._id}` : '/api/feed';
       const res = await fetch(url).then(async r => r.json());
       state.freets = res;
     }
