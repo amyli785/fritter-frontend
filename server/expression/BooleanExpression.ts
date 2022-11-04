@@ -6,7 +6,7 @@ import TagCollection from '../tag/collection';
 /** Immutable type representing a boolean expression. */
 export interface BooleanExpression {
     // Data type definition
-    //    BooleanExpression = AuthorExpression(userId:string)
+    //    BooleanExpression = AuthorExpression(username:string)
     //                        + TagExpression(label:string)
 	//                        + NotExpression(sub:BooleanExpression)
     //                        + AndExpression(left:BooleanExpression, right:BooleanExpression)
@@ -19,15 +19,15 @@ export interface BooleanExpression {
 
 export class AuthorExpression implements BooleanExpression {
     /** Make a AuthorExpression. */
-    public constructor(private readonly userId: string) {
+    public constructor(private readonly username: string) {
     }
     
     public async freetIds(): Promise<Array<Types.ObjectId>> {
-        return (await FreetCollection.findAllByUserId(this.userId)).map((freet) => freet._id);
+        return (await FreetCollection.findAllByUsername(this.username)).map((freet) => freet._id);
     }
     
     public toString(): string {
-        return "AuthorExpression(" + this.userId + ")";
+        return "AuthorExpression(" + this.username + ")";
     }
 }
 

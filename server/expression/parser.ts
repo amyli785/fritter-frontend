@@ -1,10 +1,9 @@
 import { BooleanExpression, AuthorExpression, TagExpression, NotExpression, AndExpression, OrExpression } from './BooleanExpression';
-import {Types} from 'mongoose';
 
 /**
  * Parses the string into a BooleanExpression based on the following syntax:
- * expr := "|(expr,expr)" or "&(expr,expr)" or "!(expr)" or "@authorUserId" or "#tagLabel"
- * authorUserId := alphanumeric string
+ * expr := "|(expr,expr)" or "&(expr,expr)" or "!(expr)" or "@authorUsername" or "#tagLabel"
+ * authorUsername := alphanumeric string
  * tagLabel := alphanumeric string
  * 
  * @param {string} input - the input expression to parse
@@ -58,8 +57,8 @@ function makeBooleanExpression(tokens: Array<string>): BooleanExpression {
 				return [new NotExpression(notSub[0]), notSub[1]+1];
 			case authorSymb:
 				if (tokens.length <= index+1) throw new Error(`Invalid expression: index ${index+1}`);
-				const authorUserId = tokens[index+1];
-				return [new AuthorExpression(authorUserId), index+2];
+				const authorUsername = tokens[index+1];
+				return [new AuthorExpression(authorUsername), index+2];
 			case tagSymb:
 				if (tokens.length <= index+1) throw new Error(`Invalid expression: index ${index+1}`);
 				const tagLabel = tokens[index+1];
