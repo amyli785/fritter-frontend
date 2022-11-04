@@ -2,6 +2,8 @@ import type {NextFunction, Request, Response} from 'express';
 import express from 'express';
 import { BooleanExpression, AuthorExpression, TagExpression, NotExpression, AndExpression, OrExpression } from '../expression/BooleanExpression';
 import { parse } from '../expression/parser';
+import type { Follow, PopulatedFollow } from '../follow/model';
+import UserCollection from '../user/collection';
 import FreetCollection from '../freet/collection';
 import FilterCollection from '../filter/collection';
 import FollowCollection from '../follow/collection';
@@ -71,7 +73,14 @@ router.get(
 			res.status(200).json([]);
 			return;
 		}
-		const authorExprs: Array<BooleanExpression> = followees.map((follow) => new AuthorExpression(follow.followeeId._id.toString()));
+
+		const authorExprs: Array<BooleanExpression> = followees.map((follow) => {
+      const followCopy: PopulatedFollow = {
+        ...follow.toObject({versionKey: false})
+      };
+      return new AuthorExpression(followCopy.followeeId.username);
+    });
+
 		const booleanExpr = authorExprs.reduce((sofar, authorExpr) => new OrExpression(sofar, authorExpr));
 		const freetIds = await booleanExpr.freetIds();
 		const freetIdsViewable = await feedValidator.FindViewableFreets(freetIds, req.session.userId);
@@ -86,6 +95,31 @@ router.get(
 		const filter = await FilterCollection.findOne(req.params.filterId);
 		const expression = filter.expression;
 		const booleanExpr = parse(expression);
+		const freetIds = await booleanExpr.freetIds();
+		const freetIdsViewable = await feedValidator.FindViewableFreets(freetIds, req.session.userId);
+		const freetsViewable = await FreetCollection.findAllByIds(freetIdsViewable);
+		const response = freetsViewable.map(freetUtil.constructFreetResponse);
+		res.status(200).json(response);
+	},
+);
+
+/**
+ * See the visible freets by the given user
+ * 
+ * @name GET /api/feed/author/:username
+ * 
+ * @return {FreetResponse[]} - an array of objects with the details of freets that are by the given user that the user can view in descending order by date modified
+ * @throws {403} - if the user is not logged in
+ * @throws {404} - if `username` cannot be found
+ */
+ router.get(
+	'/author/:username',
+	[
+		userValidator.isUserLoggedIn,
+    userValidator.isUsernameExists,
+	],
+	async (req: Request, res: Response, next: NextFunction) => {
+		const booleanExpr = new AuthorExpression(req.params.username);
 		const freetIds = await booleanExpr.freetIds();
 		const freetIdsViewable = await feedValidator.FindViewableFreets(freetIds, req.session.userId);
 		const freetsViewable = await FreetCollection.findAllByIds(freetIdsViewable);
