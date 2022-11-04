@@ -4,7 +4,7 @@ import FollowCollection from './collection';
 import UserCollection from '../user/collection';
 
 /**
- * Checks if a user with userId as followee id in req.body exists
+ * Checks if a user with username as followee in req.body exists
  */
  const isFolloweeExistsBody = async (req: Request, res: Response, next: NextFunction) => {
 	if (!req.body.followee) {
@@ -26,7 +26,7 @@ import UserCollection from '../user/collection';
 };
 
 /**
- * Checks if a user with userId as followee id in req.body can be followed by the user
+ * Checks if a user with username as followee in req.body can be followed by the user
  */
  const isFolloweeFollowable = async (req: Request, res: Response, next: NextFunction) => {
 	const followee = await UserCollection.findOneByUsername(req.body.followee as string);
@@ -49,7 +49,7 @@ import UserCollection from '../user/collection';
 };
 
 /**
- * Checks if a user with userId as followee id in req.params exists
+ * Checks if a user with username as followee in req.params exists
  */
  const isFolloweeExistsParams = async (req: Request, res: Response, next: NextFunction) => {
 	if (!req.params.followee) {
@@ -71,7 +71,7 @@ import UserCollection from '../user/collection';
 };
 
 /**
- * Checks if a user with userId as followee id in req.params can be unfollowed by the user
+ * Checks if a user with username as followee in req.params can be unfollowed by the user
  */
  const isFolloweeUnfollowable = async (req: Request, res: Response, next: NextFunction) => {
 	const followee = await UserCollection.findOneByUsername(req.params.followee as string);

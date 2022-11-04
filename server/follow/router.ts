@@ -53,7 +53,7 @@ router.get(
  * 
  * @name POST /api/follow
  * 
- * @param {string} followee - the user to follow
+ * @param {string} followee - the username of the user to follow
  * @return {FollowUserResponse[]} - an array of objects with the updated details of the user's following/followees
  * @throws {403} - if the user is not logged in
  * @throws {400} - if `followee` is empty
@@ -82,7 +82,7 @@ router.post(
 /**
  * Delete the follow (unfollow)
  * 
- * @name POST /api/follow/:followee
+ * @name DELETE /api/follow/:followee
  * 
  * @return {FollowUserResponse[]} - an array of objects with the updated details of the user's following/followees
  * @throws {403} - if the user is not logged in
