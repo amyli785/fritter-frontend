@@ -39,7 +39,7 @@ router.get(
 /**
  * View the freet
  * 
- * @name GET /api/freets/:freetId
+ * @name GET /api/freets/:freetId?full=boolean
  * 
  * @return {FreetResponse} - an object with the details of the freet
  * @throws {400} - if `freetId` is in the wrong format
@@ -52,7 +52,9 @@ router.get(
   ],
   async (req: Request, res: Response) => {
     const freet = await FreetCollection.findOne(req.params.freetId);
-    res.status(200).json(util.constructFreetResponse(freet));
+    const full = req.query.full && (req.query.full.toString().toLowerCase() === 'true');
+    const freetResponse = full ? (await util.constructFreetResponseFull(freet)) : util.constructFreetResponse(freet);
+    res.status(200).json(freetResponse);
   }
 );
 
