@@ -4,6 +4,9 @@
       <header>
         @{{ this.username }}
       </header>
+      <RRPictureComponent class="user-picture"
+        :username="this.username"
+      />
     </section>
     <section v-else>
       User not found: @{{ this.username }}
@@ -12,8 +15,11 @@
 </template>
 
 <script>
+import RRPictureComponent from '../RRPicture/RRPictureComponent.vue';
+
 export default {
   name: 'UserPage',
+  components: {RRPictureComponent},
   data() {
     return {
       username: this.$route.params.username,
@@ -60,3 +66,12 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+
+.user-picture {
+  width: 5cm;
+  height: 5cm;
+}
+
+</style>
