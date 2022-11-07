@@ -1,8 +1,15 @@
 <template>
 	<article class="picture-container">
-    <div class="picture-display">
-      {{ this.display }}
+    <div v-if="!this.rrpicture">
+      None
     </div>
+    <div v-else-if="this.rrpicture.pictureType === 'RawString'">
+      {{ this.rrpicture.picture }}
+    </div>
+    <img v-else
+      :src="this.rrpicture.picture"
+      :alt="`@${this.username}'s profile picture`"
+    />
   </article>
 </template>
 
@@ -18,7 +25,6 @@ export default {
   data() {
     return {
       rrpicture: {},
-      display: '',
       alerts: {},
     };
   },
@@ -33,21 +39,11 @@ export default {
         }
 
         this.rrpicture = res;
-        
-        if (!this.rrpicture) {
-          this.display = 'None';
-        } else if (this.rrpicture.pictureType === 'RawString') {
-          this.display = this.rrpicture.picture;
-        } else {
-          this.display = 'TODO'
-        }
       } catch (e) {
         this.$set(this.alerts, e, 'error');
         setTimeout(() => this.$delete(this.alerts, e), 3000);
       }
     },
-    setDisplay() {
-    }
   },
   mounted() {
     this.getPicture();
@@ -70,13 +66,6 @@ export default {
   justify-content: center;
   align-content: center;
   align-items: center;
-}
-
-.picture-display {
-  flex-basis: 0;
-
-  text-align: center;
-  vertical-align: center;
 }
 
 </style>
