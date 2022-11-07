@@ -40,7 +40,6 @@ router.get(
 router.get(
 	'/current/:username?',
 	[
-		userValidator.isUserLoggedIn,
 		userValidator.isUsernameExists,
 	],
 	async (req: Request, res: Response) => {
