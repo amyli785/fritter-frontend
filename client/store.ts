@@ -71,7 +71,7 @@ const store = new Vuex.Store({
       const url = state.currentFilter._id ? `/api/feed/${state.currentFilter._id}` : '/api/feed';
       const res = await fetch(url).then(async r => r.json());
       state.freets = res;
-    }
+    },
   },
   // Store data across page refreshes, only discard on browser close
   plugins: [createPersistedState()]

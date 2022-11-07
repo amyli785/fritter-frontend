@@ -85,7 +85,6 @@ export default {
         body: JSON.stringify(httpBody),
         headers: {'Content-Type': 'application/json'},
       };
-      console.log(options);
 
       try {
         const r = await fetch(url, options);
