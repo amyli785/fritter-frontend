@@ -6,9 +6,12 @@
     class="freet"
   >
     <header>
-      <h3 class="author">
+      <!-- <h3 class="author">
         @{{ freet.author }}
-      </h3>
+      </h3> -->
+      <UserComponent
+        :username="freet.author"
+      />
     </header>
     <p class="content" >
       {{ freet.content }}
@@ -30,8 +33,11 @@
 </template>
 
 <script>
+import UserComponent from '../User/UserComponent.vue'
+
 export default {
   name: 'FreetComponent',
+  components: {UserComponent},
   props: {
     // Data from the stored freet
     freet: {

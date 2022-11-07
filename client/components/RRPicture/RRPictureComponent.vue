@@ -1,5 +1,5 @@
 <template>
-	<article class="picture-container">
+	<article class="rrpicture-container">
     <div v-if="!this.rrpicture">
       None
     </div>
@@ -7,6 +7,7 @@
       {{ this.rrpicture.picture }}
     </div>
     <img v-else
+      class="rrpicture-image"
       :src="this.rrpicture.picture"
       :alt="`@${this.username}'s profile picture`"
     />
@@ -53,12 +54,11 @@ export default {
 
 <style scoped>
 
-.picture-container {
+.rrpicture-container {
   width: 100%;
   height: 100%;
 
   border-radius: 50%;
-  border: 1pt solid gray;
   background-color: lightgray;
   overflow: hidden;
 
@@ -67,6 +67,11 @@ export default {
   justify-content: center;
   align-content: center;
   align-items: center;
+}
+
+.rrpicture-image {
+  max-width: 100%;
+  max-height: 100%;
 }
 
 </style>
