@@ -7,6 +7,10 @@
       <RRPictureComponent class="user-picture"
         :username="this.username"
       />
+      <UserUnFollowButton v-if="$store.state.username"
+        :username="this.username"
+        :userId="this.userId"
+      />
     </section>
     <section v-else>
       User not found: @{{ this.username }}
@@ -16,10 +20,11 @@
 
 <script>
 import RRPictureComponent from '../RRPicture/RRPictureComponent.vue';
+import UserUnFollowButton from '../User/UserUnFollowButton.vue';
 
 export default {
   name: 'UserPage',
-  components: {RRPictureComponent},
+  components: {RRPictureComponent, UserUnFollowButton},
   data() {
     return {
       username: this.$route.params.username,
