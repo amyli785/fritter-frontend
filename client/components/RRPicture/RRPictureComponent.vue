@@ -58,8 +58,9 @@ export default {
   height: 100%;
 
   border-radius: 50%;
-  border: 1pt solid lightgray;
+  border: 1pt solid gray;
   background-color: lightgray;
+  overflow: hidden;
 
   display: flex;
   flex-direction: row;
