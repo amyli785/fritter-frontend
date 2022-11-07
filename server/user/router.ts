@@ -8,6 +8,28 @@ import * as util from './util';
 const router = express.Router();
 
 /**
+ * View the user object associated with a username.
+ * 
+ * @name GET /api/user/:username
+ * 
+ * @return {UserResponse} - an object with the user's details
+ * @throws {404} - if the `username` does not exist
+ */
+router.get(
+  '/:username',
+  async (req: Request, res: Response) => {
+    const user = await UserCollection.findOneByUsername(req.params.username);
+    if (!user) {
+      res.status(404).json({
+        error: `User with username ${req.params.username} does not exist.`,
+      });
+      return;
+    }
+    res.status(200).json(util.constructUserResponse(user));
+  }
+);
+
+/**
  * Create a new user account
  *
  * @name POST /api/users
