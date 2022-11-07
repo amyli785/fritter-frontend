@@ -22,12 +22,16 @@ export default {
     };
   },
   methods: {
+    async redirect() {
+      if (this.username === this.$store.state.username) {
+        this.$router.push({ path: '/account' });
+      }
+    },
     async getUsername() {
       const url = `/api/users/${this.username}`;
       try {
         const r = await fetch(url);
         const res = await r.json();
-        console.log(res);
         if (!r.ok) {
           throw new Error(res.error);
         }
@@ -37,18 +41,21 @@ export default {
         this.$set(this.alerts, e, 'error');
         setTimeout(() => this.$delete(this.alerts, e), 3000);
       }
-    }
+    },
   },
   created() {
     this.$watch(
       () => this.$route.params,
       (toParams, previousParams) => {
         this.username = toParams.username;
+        this.userId = '';
+        this.redirect();
         this.getUsername();
       }
     );
   },
   mounted() {
+    this.redirect();
     this.getUsername();
   },
 };

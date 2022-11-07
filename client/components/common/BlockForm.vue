@@ -90,8 +90,6 @@ export default {
           throw new Error(res.error);
         }
 
-        this.res = await r.json();
-
         if (this.setUsername) {
           const text = await r.text();
           const res = text ? JSON.parse(text) : {user: null};
