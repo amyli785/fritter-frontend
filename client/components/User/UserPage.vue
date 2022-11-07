@@ -9,7 +9,9 @@
       />
       <UserUnFollowButton v-if="$store.state.username"
         :username="this.username"
-        :userId="this.userId"
+      />
+      <UserFreets v-if="$store.state.username"
+        :username="this.username"
       />
     </section>
     <section v-else>
@@ -21,10 +23,11 @@
 <script>
 import RRPictureComponent from '../RRPicture/RRPictureComponent.vue';
 import UserUnFollowButton from '../User/UserUnFollowButton.vue';
+import UserFreets from '../User/UserFreets.vue';
 
 export default {
   name: 'UserPage',
-  components: {RRPictureComponent, UserUnFollowButton},
+  components: {RRPictureComponent, UserUnFollowButton, UserFreets},
   data() {
     return {
       username: this.$route.params.username,
