@@ -47,7 +47,9 @@
         </div>
       </section>
       <section v-if="!filterEditing" class="filter-tab-edit-modal-item">
-        <CreateFilterForm />
+        <CreateFilterForm 
+          @done="stopEditFilters"
+        />
       </section>
       <section v-else class="filter-tab-edit-modal-item">
         <div class="filter-tab-edit-modal-item-sub filter-tab-edit-modal-item-sub-container">

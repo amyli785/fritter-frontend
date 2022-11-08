@@ -3,46 +3,44 @@
 <!-- This navbar takes advantage of both flex and grid layouts for positioning elements; feel free to redesign as you see fit! -->
 
 <template>
-  <div>
-    <nav>
-      <div class="left">
-        <FilterTabBar v-if="$store.state.username && $route.name==='Home'"
-          :filters="this.$store.state.customFilters"
-        />
-        <router-link v-else class="round-click" to="/">
-          Fritter
-        </router-link>
-      </div>
-      <div class="right">
-        <button v-if="$store.state.username"
-          class="round-click"
-          @click="startCreatingFreet"
-        >
-          📝
-        </button>
-        <router-link v-if="$store.state.username"
-          class="round-click"
-          to="/account"
-        >
-          Account
-        </router-link>
-        <router-link v-else
-          class="round-click"
-          to="/login"
-        >
-          Login
-        </router-link>
-      </div>
-      <section class="alerts">
-        <article
-          v-for="(status, alert, index) in $store.state.alerts"
-          :key="index"
-          :class="status"
-        >
-          <p>{{ alert }}</p>
-        </article>
-      </section>
-    </nav>
+  <nav>
+    <div class="left">
+      <FilterTabBar v-if="$store.state.username && $route.name==='Home'"
+        :filters="this.$store.state.customFilters"
+      />
+      <router-link v-else class="round-click" to="/">
+        Fritter
+      </router-link>
+    </div>
+    <div class="right">
+      <button v-if="$store.state.username"
+        class="round-click"
+        @click="startCreatingFreet"
+      >
+        📝
+      </button>
+      <router-link v-if="$store.state.username"
+        class="round-click"
+        to="/account"
+      >
+        Account
+      </router-link>
+      <router-link v-else
+        class="round-click"
+        to="/login"
+      >
+        Login
+      </router-link>
+    </div>
+    <section class="alerts">
+      <article
+        v-for="(status, alert, index) in $store.state.alerts"
+        :key="index"
+        :class="status"
+      >
+        <p>{{ alert }}</p>
+      </article>
+    </section>
     <Modal
       v-if="creatingFreet"
       :id="'createFreet'"
@@ -53,7 +51,7 @@
         @done="stopCreatingFreet"
       />
     </Modal>
-  </div>
+  </nav>
 </template>
 
 <script>

@@ -27,6 +27,8 @@ export default {
           throw new Error(res.error);
         }
         this.$store.commit('refreshCustomFilters');
+        this.$store.commit('updateCurrentFilter', this.$store.state.filterAll);
+        this.$store.commit('refreshFreets');
         this.$emit('done');
       } catch (e) {
         console.log(e);

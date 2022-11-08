@@ -54,11 +54,13 @@ export default {
 
       try {
         const r = await fetch(url, options);
+        const res = await r.json();
         if (!r.ok) {
-          const res = await r.json();
           throw new Error(res.error);
         }
         this.$store.commit('refreshCustomFilters');
+        this.$store.commit('updateCurrentFilter', res);
+        this.$store.commit('refreshFreets');
         this.$emit('done');
       } catch (e) {
         console.log(e);
