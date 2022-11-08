@@ -3,18 +3,21 @@
 
 <template>
   <form class="form-container" @submit.prevent="submit">
+    <h3 v-if="title" class="form-title">
+      {{title}}
+    </h3>
     <article
       v-if="fields.length"
-      class="form-items-container"
+      class="form-fields-container"
     >
       <div
         v-for="field in fields"
-        class="form-item-container"
+        class="form-field-container"
         :key="field.id"
       >
-        <label class="form-item-label" :for="field.id">{{ field.label }}:</label>
+        <label class="form-field-label" :for="field.id">{{ field.label }}</label>
         <input
-          class="form-item-input"
+          class="form-field-input"
           :type="field.id === 'password' ? 'password' : 'text'"
           :name="field.id"
           :value="field.value"
@@ -22,12 +25,11 @@
         >
       </div>
     </article>
-    <button class="round-click" type="submit">✓</button>
+    <button class="form-submit round-click" type="submit">{{ submitText ? submitText : "Submit"}}</button>
   </form>
 </template>
 
 <script>
-
 export default {
   name: 'BlockForm',
   data() {
@@ -97,43 +99,53 @@ export default {
 </script>
 
 <style scoped>
-.form-container {
-  flex-basis: 100%;
-
-  margin: 0.5vw;
-  padding: 0.5vw;
+/* .form-container {
+  width: 100%;
+  
+  margin: 0;
+  padding: 1vw;
 
   background-color: #E8ECED;
 
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
+  gap: 1vw;
 }
 
-.form-items-container {
-  flex-basis: 100%;
+.form-title {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.form-fields-container {
+  width: 100%;
 
   display: flex;
   flex-direction: column;
+  gap: 0.4vw;
 }
 
-.form-item-container {
+.form-field-container {
   display: flex;
   flex-direction: column;
+  gap: 0.2vw;
 }
 
-.form-item-label {
-  padding: 0.2em 0.2em;
-  font-size: small;
+.form-field-label {
+  font-size: medium;
 }
 
-.form-item-input {
-  padding: 0.2em 0.2em;
-  font-size: small;
-}
+.form-field-input {
+  font-size: medium;
+  padding: 0.4em;
+} */
 
 .round-click, .round-click:link, .round-click:hover, .round-click:visited {
   background-color: #B2DBE6;
+  border-color: #B2DBE6;
 }
 </style>

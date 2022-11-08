@@ -14,10 +14,10 @@
     </div>
     <div class="right">
       <button v-if="$store.state.username"
-        class="round-click"
+        class="round-click nav-new-freet"
         @click="startCreatingFreet"
       >
-        📝
+        + New Freet
       </button>
       <router-link v-if="$store.state.username"
         class="round-click"
@@ -43,8 +43,8 @@
     </section>
     <Modal
       v-if="creatingFreet"
+      title="Compose a Freet"
       :id="'createFreet'"
-      :closeLabel="'Cancel'"
       @close="stopCreatingFreet"
     >
       <CreateFreetForm
@@ -104,9 +104,15 @@ nav {
   flex-direction: row;
   justify-content: flex-end;
 	align-items: center;
+  gap: 1vw;
 }
 
 .alerts {
   width: 25%;
 }
+
+.nav-new-freet {
+  border-color: #b2dbe6;
+}
+
 </style>

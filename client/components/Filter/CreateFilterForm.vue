@@ -13,6 +13,8 @@ export default {
         {id: 'expression', label: 'expression', value: ''},
         {id: 'name', label: 'name', value: ''}
       ],
+      title: "Create New Filter",
+      submitText: "",
       callback: (res) => {
         this.$store.commit('refreshCustomFilters');
         this.$store.commit('updateCurrentFilter', res);

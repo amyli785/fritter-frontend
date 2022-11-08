@@ -19,6 +19,8 @@ export default {
         {id: 'expression', label: 'new expression', value: ''},
         {id: 'name', label: 'new name', value: ''}
       ],
+      title: "Edit Filter",
+      submitText: "",
       callback: (res) => {
         this.$store.commit('refreshCustomFilters');
         this.$store.commit('updateCurrentFilter', res);

@@ -82,11 +82,11 @@ main {
 
 .round-click, .round-click:link, .round-click:hover, .round-click:visited {
   padding: 1vw;
-	margin: 0vw 0.5vw;
+	margin: 0vw 0vw;
   border-radius: 2vw;
   background-color: #fff;
 
-  border: none;
+  border: 2pt solid #fff;
 
   color: #000;
   text-decoration: none;
@@ -107,6 +107,51 @@ main {
 
 .invis-click:hover {
   cursor: pointer;
+}
+
+.form-container {
+  width: 100%;
+  
+  margin: 0;
+  padding: 1vw;
+
+  background-color: #E8ECED;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1vw;
+}
+
+.form-title {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.form-fields-container {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.4vw;
+}
+
+.form-field-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2vw;
+}
+
+.form-field-label {
+  font-size: medium;
+}
+
+.form-field-input {
+  font-size: medium;
+  padding: 0.4em;
 }
 
 </style>

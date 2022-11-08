@@ -2,10 +2,13 @@
 
 <template>
   <form class="form-container" @submit.prevent="submit">
-    <article class="form-items-container">
-      <div class="form-item-container">
-        <label class="form-item-label" for="content-textarea">content</label>
-        <textarea class="form-item-input"
+    <!-- <h3 v-if="title" class="form-title">
+      Compose a new Freet
+    </h3> -->
+    <article class="form-fields-container">
+      <div class="form-field-container">
+        <label class="form-field-label" for="content-textarea">content</label>
+        <textarea class="form-field-input"
           name="content"
           :value="content"
           id="content-textarea"
@@ -13,10 +16,10 @@
         >
         </textarea>
       </div>
-      <div class="form-item-container">
-        <label class="form-item-label" for="audience-select">audience</label>
+      <div class="form-field-container">
+        <label class="form-field-label" for="audience-select">audience</label>
         <select
-          class="form-item-input"
+          class="form-field-input"
           name="audience"
           id="audience-select"
         >
@@ -32,7 +35,7 @@
         </select>
       </div>
     </article>
-    <button class="round-click" type="submit">✓</button>
+    <button class="form-submit round-click" type="submit">Post</button>
   </form>
 </template>
 
@@ -98,43 +101,9 @@ export default {
 
 
 <style scoped>
-.form-container {
-  flex-basis: 100%;
-
-  margin: 0.5vw;
-  padding: 0.5vw;
-
-  background-color: #E8ECED;
-
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.form-items-container {
-  flex-basis: 100%;
-
-  display: flex;
-  flex-direction: column;
-}
-
-.form-item-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.form-item-label {
-  padding: 0.2em 0.2em;
-  font-size: small;
-}
-
-.form-item-input {
-  padding: 0.2em 0.2em;
-  font-size: small;
-}
 
 .round-click, .round-click:link, .round-click:hover, .round-click:visited {
   background-color: #B2DBE6;
+  border-color: #B2DBE6;
 }
 </style>

@@ -1,73 +1,64 @@
 <template>
   <section class="filter-tab-bar">
-    <div>
-      <FilterTabComponent
-        :class="'round-click ' + ($store.state.currentFilter._id === $store.state.filterAll._id ? 'filter-tab-selected' : '')"
-        :filter="$store.state.filterAll"
-      />
-      <FilterTabComponent
-        :class="'round-click ' + ($store.state.currentFilter._id === $store.state.filterFollowing._id ? 'filter-tab-selected' : '')"
-        :filter="$store.state.filterFollowing"
-      />
-      <FilterTabComponent
-        v-for="filter in filters"
-        :class="'round-click ' + (filter._id === $store.state.currentFilter._id ? 'filter-tab-selected' : '')"
-        :key="filter._id"
-        :filter="filter"
-      />
-    </div>
-    <div>
-      <button class="round-click" @click="startEditFilters">
-        Edit Filters
-      </button>
-    </div>
+    <FilterTabComponent
+      :class="'round-click ' + ($store.state.currentFilter._id === $store.state.filterAll._id ? 'filter-tab-selected' : '')"
+      :filter="$store.state.filterAll"
+    />
+    <FilterTabComponent
+      :class="'round-click ' + ($store.state.currentFilter._id === $store.state.filterFollowing._id ? 'filter-tab-selected' : '')"
+      :filter="$store.state.filterFollowing"
+    />
+    <FilterTabComponent
+      v-for="filter in filters"
+      :class="'round-click ' + (filter._id === $store.state.currentFilter._id ? 'filter-tab-selected' : '')"
+      :key="filter._id"
+      :filter="filter"
+    />
+    <button class="round-click" @click="startUpdateFilters">
+      Update Filters
+    </button>
     <Modal
-      v-if="editingFilters"
-      class="filter-tab-edit-modal"
-      :id="'editFilters'"
-      :closeLabel="'Cancel'"
-      @close="stopEditFilters"
+      v-if="updatingFilters"
+      title="Update Filters"
+      @close="stopUpdateFilters"
     >
-      <section class="filter-tab-edit-bar filter-tab-edit-modal-item">
-        <div class="filter-tab-edit-modal-item-sub">
-          <button
-            v-for="filter in filters"
-            :class="'round-click ' + (filter._id === filterEditing._id ? 'filter-tab-edit-selected' : '')"
-            :key="'option ' + filter._id"
-            @click="filterEditing = filter"
-          >
-            {{ filter.name }}
-          </button>
-          <button
-            :class="'round-click ' + (!filterEditing? 'filter-tab-edit-selected' : '')"
-            @click="filterEditing = false"
-          >
-            +
-          </button>
-        </div>
+      <section class="filter-tab-modal-bar">
+        <button
+          v-for="filter in filters"
+          :class="'round-click ' + (filter._id === filterEditing._id ? 'filter-tab-modal-bar-selected' : '')"
+          :key="'option ' + filter._id"
+          @click="filterEditing = filter"
+        >
+          {{ filter.name }}
+        </button>
+        <button
+          :class="'round-click ' + (!filterEditing? 'filter-tab-modal-bar-selected' : '')"
+          @click="filterEditing = false"
+        >
+          + New Filter
+        </button>
       </section>
-      <section v-if="!filterEditing" class="filter-tab-edit-modal-item">
+      <section v-if="!filterEditing" class="filter-tab-modal-content">
         <CreateFilterForm 
-          @done="stopEditFilters"
+          submitText=""
+          @done="stopUpdateFilters"
         />
       </section>
-      <section v-else class="filter-tab-edit-modal-item">
-        <div class="filter-tab-edit-modal-item-sub filter-tab-edit-modal-item-sub-container">
-          <div class="filter-tab-edit-model-item-expression">current expression:</div>
-          <div class="filter-tab-edit-model-item-expression">{{filterEditing.expression}}</div>
+      <section v-else class="filter-tab-modal-content">
+        <div class="filter-tab-modal-editing-current-container">
+          <h3 class="filter-tab-modal-editing-current-header">Current Expression</h3>
+          <p class="filter-tab-modal-editing-current-body">{{filterEditing.expression}}</p>
         </div>
-        <div class="filter-tab-edit-modal-item-sub">
-          <EditFilterForm
-            :key="'edit ' + filterEditing._id"
-            :filter="filterEditing"
-            @done="stopEditFilters"
-          />
-          <DeleteFilterForm
-            :key="'delete ' + filterEditing._id"
-            :filter="filterEditing"
-            @done="stopEditFilters"
-          />
-        </div>
+        <DeleteFilterForm class="filter-tab-modal-editing-delete"
+          :key="'delete ' + filterEditing._id"
+          :filter="filterEditing"
+          @done="stopUpdateFilters"
+        />
+        <EditFilterForm class="filter-tab-modal-editing-edit"
+          :key="'edit ' + filterEditing._id"
+          :filter="filterEditing"
+          @done="stopUpdateFilters"
+        />
       </section>
     </Modal>
   </section>
@@ -92,7 +83,7 @@
     },
     data() {
       return {
-        editingFilters: false,
+        updatingFilters: false,
         filterEditing: false,
         alerts: {},
       };
@@ -113,12 +104,12 @@
           setTimeout(() => this.$delete(this.alerts, e), 3000);
         }
       },
-      startEditFilters() {
-        this.editingFilters = true;
+      startUpdateFilters() {
+        this.updatingFilters = true;
         this.filterEditing = false;
       },
-      stopEditFilters() {
-        this.editingFilters = false;
+      stopUpdateFilters() {
+        this.updatingFilters = false;
         this.filterEditing = false;
       },
     },
@@ -134,67 +125,75 @@
     flex-direction: row;
 	  justify-content: space-between;
 	  align-items: center;
-	  position: relative;
+    gap: 1vw;
   }
 
-  .filter-tab-edit-modal {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
-    transition-duration: 0s;
-  }
+  .filter-tab-modal-bar {
+    width: 100%;
 
-  .filter-tab-edit-bar {
 	  display: flex;
     flex-direction: row;
 	  justify-content: flex-start;
 	  align-items: center;
-	  position: relative;
+    gap: 1vw;
   }
 
-  .filter-tab-edit-modal-item {
+  .filter-tab-modal-content {
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
-    position: relative;
-  }
 
-  .filter-tab-edit-modal-item-sub {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: flex-start;
     align-items: stretch;
-    position: relative;
+    gap: 1vw;
   }
 
-  .filter-tab-edit-modal-item-sub-container {
-    flex-basis: 100%;
-
-    margin: 0.5vw;
-    padding: 0.5vw;
+  .filter-tab-modal-editing-current-container {
+    flex-basis: 50%;
+    flex-grow: 1;
+    flex-shrink: 1;
+    
+    margin: 0;
+    padding: 1vw;
 
     background-color: #E8ECED;
 
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
+    gap: 1vw;
   }
 
-  .filter-tab-edit-model-item-expression {
-    padding: 0.2em 0.2em;
-    font-size: small;
+  .filter-tab-modal-editing-current-header {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .filter-tab-modal-editing-current-body {
+    margin: 0;
+    padding: 1vw 0;
+
+    font-size: medium;
+  }
+
+  .filter-tab-modal-editing-delete {
+    flex-basis: 10%;
+    flex-shrink: 0;
+  }
+
+  .filter-tab-modal-editing-edit {
+    flex-basis: 100%;
+    flex-shrink: 0;
   }
 
   .filter-tab-selected {
-    background-color: #B2DBE6;
+    border-color: #000;
   }
 
-  .filter-tab-edit-selected {
-    background-color: #3C9EB9;
+  .filter-tab-modal-bar-selected {
+    border-color: #000;
   }
 
   .alerts {
