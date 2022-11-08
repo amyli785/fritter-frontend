@@ -1,12 +1,11 @@
 <!-- Form for creating freets (block style) -->
 
 <template>
-  <form @submit.prevent="submit">
-    <h3>Write a Freet</h3>
-    <article>
-      <div>
-        <label for="content-textarea">Content:</label>
-        <textarea
+  <form class="form-container" @submit.prevent="submit">
+    <article class="form-items-container">
+      <div class="form-item-container">
+        <label class="form-item-label" for="content-textarea">content</label>
+        <textarea class="form-item-input"
           name="content"
           :value="content"
           id="content-textarea"
@@ -14,9 +13,10 @@
         >
         </textarea>
       </div>
-      <div>
-        <label for="audience-select">Audience:</label>
+      <div class="form-item-container">
+        <label class="form-item-label" for="audience-select">audience</label>
         <select
+          class="form-item-input"
           name="audience"
           id="audience-select"
         >
@@ -32,16 +32,7 @@
         </select>
       </div>
     </article>
-    <button type="submit">Check Symbol</button>
-    <section class="alerts">
-      <article
-        v-for="(status, alert, index) in alerts"
-        :key="index"
-        :class="status"
-      >
-        <p>{{ alert }}</p>
-      </article>
-    </section>
+    <button class="round-click" type="submit">✓</button>
   </form>
 </template>
 
@@ -53,7 +44,6 @@ export default {
       content: "",
       audience: "",
       groups: {},
-      alerts: {},
     }
   },
   methods: {
@@ -69,8 +59,8 @@ export default {
         this.groups = res;
         console.log(this.groups);
       } catch(e) {
-        this.$set(this.alerts, e, 'error');
-        setTimeout(() => this.$delete(this.alerts, e), 3000);
+        console.log(e);
+        // TODO: deal with errors correctly
       }
     },
     async submit() {
@@ -93,9 +83,10 @@ export default {
           throw new Error(res.error);
         }
         this.$store.commit('refreshFreets');
+        this.$emit('done');
       } catch (e) {
-        this.$set(this.alerts, e, 'error');
-        setTimeout(() => this.$delete(this.alerts, e), 3000);
+        console.log(e);
+        // TODO: deal with errors correctly
       }
     },
   },
@@ -104,3 +95,46 @@ export default {
   },
 };
 </script>
+
+
+<style scoped>
+.form-container {
+  flex-basis: 100%;
+
+  margin: 0.5vw;
+  padding: 0.5vw;
+
+  background-color: #E8ECED;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-items-container {
+  flex-basis: 100%;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.form-item-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-item-label {
+  padding: 0.2em 0.2em;
+  font-size: small;
+}
+
+.form-item-input {
+  padding: 0.2em 0.2em;
+  font-size: small;
+}
+
+.round-click, .round-click:link, .round-click:hover, .round-click:visited {
+  background-color: #B2DBE6;
+}
+</style>

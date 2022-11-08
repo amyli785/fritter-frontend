@@ -6,9 +6,6 @@
     class="freet"
   >
     <header>
-      <!-- <h3 class="author">
-        @{{ freet.author }}
-      </h3> -->
       <UserComponent
         :username="freet.author"
       />

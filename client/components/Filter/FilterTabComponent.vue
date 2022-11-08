@@ -2,7 +2,7 @@
 <!-- We've tagged some elements with classes; consider writing CSS using those classes to style them... -->
 
 <template>
-  <button class="tab" @click="onClick">
+  <button @click="onClick">
     {{ this.filter.name }}
   </button>
 </template>
@@ -24,8 +24,8 @@
 	},
 	methods: {
 	  onClick() {
-      	this.$store.commit('updateCurrentFilter', this.filter);
-		this.$store.commit('refreshFreets');
+      this.$store.commit('updateCurrentFilter', this.filter);
+      this.$store.commit('refreshFreets');
 	  },
 	},
 	mounted() {

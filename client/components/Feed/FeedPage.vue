@@ -3,16 +3,10 @@
 <template>
 	<main>
 	  <section v-if="$store.state.username">
-	  <FilterTabBar 
-      ref="filterTabBar"
-      :filters="this.$store.state.customFilters"
-    />
 		<header>
 		  <h2>Welcome @{{ $store.state.username }}</h2>
 		</header>
-    <FeedFreets 
-      ref="feedFreets"
-    />
+    <FeedFreets />
 	  </section>
 	  <section v-else>
 		<header>
@@ -28,12 +22,11 @@
 </template>
   
 <script>
-  import FilterTabBar from '../Filter/FilterTabBar.vue';
   import FeedFreets from '../Feed/FeedFreets.vue';
   
   export default {
     name: 'FeedPage',
-    components: {FilterTabBar, FeedFreets},
+    components: {FeedFreets},
   };
 </script>
   

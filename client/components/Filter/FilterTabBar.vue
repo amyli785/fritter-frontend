@@ -1,58 +1,73 @@
-
 <template>
-  <section class="filter-tab-component">
-    <section class="filter-tab-bar">
-      <section class="left">
-        <FilterTabComponent
-          :filter="this.$store.state.filterAll"
-        />
-        <FilterTabComponent
-          :filter="this.$store.state.filterFollowing"
-        />
-        <FilterTabComponent
-          v-for="filter in this.filters"
-          :key="filter.id"
-          :filter="filter"
-        />
+  <section class="filter-tab-bar">
+    <div>
+      <FilterTabComponent
+        :class="'round-click ' + ($store.state.currentFilter._id === $store.state.filterAll._id ? 'filter-tab-selected' : '')"
+        :filter="$store.state.filterAll"
+      />
+      <FilterTabComponent
+        :class="'round-click ' + ($store.state.currentFilter._id === $store.state.filterFollowing._id ? 'filter-tab-selected' : '')"
+        :filter="$store.state.filterFollowing"
+      />
+      <FilterTabComponent
+        v-for="filter in filters"
+        :class="'round-click ' + (filter._id === $store.state.currentFilter._id ? 'filter-tab-selected' : '')"
+        :key="filter._id"
+        :filter="filter"
+      />
+    </div>
+    <div>
+      <button class="round-click" @click="startEditFilters">
+        Edit Filters
+      </button>
+    </div>
+    <Modal
+      v-if="editingFilters"
+      class="filter-tab-edit-modal"
+      :id="'editFilters'"
+      :closeLabel="'Cancel'"
+      @close="stopEditFilters"
+    >
+      <section class="filter-tab-edit-bar filter-tab-edit-modal-item">
+        <div class="filter-tab-edit-modal-item-sub">
+          <button
+            v-for="filter in filters"
+            :class="'round-click ' + (filter._id === filterEditing._id ? 'filter-tab-edit-selected' : '')"
+            :key="'option ' + filter._id"
+            @click="filterEditing = filter"
+          >
+            {{ filter.name }}
+          </button>
+          <button
+            :class="'round-click ' + (!filterEditing? 'filter-tab-edit-selected' : '')"
+            @click="filterEditing = false"
+          >
+            +
+          </button>
+        </div>
       </section>
-      <section class="right">
-        <button @click="startCreateFreet" v-if="!creatingFreet">
-          Create Freet
-        </button>
-        <button @click="endCreateFreet" v-else>
-          Cancel Create Freet
-        </button>
-        <button @click="startEditFilters" v-if="!editingFilters">
-          Edit Filters
-        </button>
-        <button @click="stopEditFilters" v-else>
-          Done Editing Filters
-        </button>
-        <button @click="startCreateFilter" v-if="editingFilters && !creatingFilter" >
-          Add Filter
-        </button>
-        <button @click="stopCreateFilter" v-if="editingFilters && creatingFilter" >
-          Cancel Add Filter
-        </button>
+      <section v-if="!filterEditing" class="filter-tab-edit-modal-item">
+        <CreateFilterForm />
       </section>
-    </section>
-    <CreateFreetForm v-if="creatingFreet" />
-    <section class="filter-tab-form" v-if="editingFilters">
-      <CreateFilterForm v-if="creatingFilter" />
-      <section v-if="!creatingFilter"></section>
-        <section v-if="($store.state.currentFilter._id !== $store.state.filterAll._id) &&
-                       ($store.state.currentFilter._id !== $store.state.filterFollowing._id)">
+      <section v-else class="filter-tab-edit-modal-item">
+        <div class="filter-tab-edit-modal-item-sub filter-tab-edit-modal-item-sub-container">
+          <div class="filter-tab-edit-model-item-expression">current expression:</div>
+          <div class="filter-tab-edit-model-item-expression">{{filterEditing.expression}}</div>
+        </div>
+        <div class="filter-tab-edit-modal-item-sub">
           <EditFilterForm
-            :filter="$store.state.currentFilter"
+            :key="'edit ' + filterEditing._id"
+            :filter="filterEditing"
+            @done="stopEditFilters"
           />
           <DeleteFilterForm
-            :filter="$store.state.currentFilter"
+            :key="'delete ' + filterEditing._id"
+            :filter="filterEditing"
+            @done="stopEditFilters"
           />
-        </section>
-        <h3 v-else>
-          Cannot edit filter {{ $store.state.currentFilter.name }}
-        </h3>
-    </section>
+        </div>
+      </section>
+    </Modal>
   </section>
 </template>
   
@@ -62,10 +77,11 @@
   import EditFilterForm from '../Filter/EditFilterForm.vue';
   import DeleteFilterForm from '../Filter/DeleteFilterForm.vue';
   import CreateFreetForm from '../Freet/CreateFreetForm.vue';
+  import Modal from '../common/Modal.vue';
   
   export default {
     name: 'FilterTabBar',
-    components: {FilterTabComponent, CreateFilterForm, EditFilterForm, DeleteFilterForm, CreateFreetForm},
+    components: {FilterTabComponent, CreateFilterForm, EditFilterForm, DeleteFilterForm, CreateFreetForm, Modal},
     props: {
       filters: {
       type: Array,
@@ -75,8 +91,7 @@
     data() {
       return {
         editingFilters: false,
-        creatingFilter: false,
-        creatingFreet: false,
+        filterEditing: false,
         alerts: {},
       };
     },
@@ -98,23 +113,11 @@
       },
       startEditFilters() {
         this.editingFilters = true;
-        this.creatingFilter = false;
+        this.filterEditing = false;
       },
       stopEditFilters() {
         this.editingFilters = false;
-        this.creatingFilter = false;
-      },
-      startCreateFilter() {
-        this.creatingFilter = true;
-      },
-      stopCreateFilter() {
-        this.creatingFilter = false;
-      },
-      startCreateFreet() {
-        this.creatingFreet = true;
-      },
-      endCreateFreet() {
-        this.creatingFreet = false;
+        this.filterEditing = false;
       },
     },
     mounted() {
@@ -124,15 +127,7 @@
 </script>
 
 <style scoped>
-  .filter-tab-component {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    position: relative
-  }
-
   .filter-tab-bar {
-	  padding: 1vw 0vw;
 	  display: flex;
     flex-direction: row;
 	  justify-content: space-between;
@@ -140,38 +135,64 @@
 	  position: relative;
   }
 
-  .left {
+  .filter-tab-edit-modal {
     display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    transition-duration: 0s;
+  }
+
+  .filter-tab-edit-bar {
+	  display: flex;
     flex-direction: row;
-    justify-content: flex-start;
-  }
-
-  .right {
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: flex-start;
-  }
-
-  .filter-tab-form {
-	  margin: 1vw 2vw;
-    background-color: #fff;
-    position: relative;
-  }
-
-  button {
-    margin: 0vw 0.5vw;
-	  padding: 1vw;
-    background-color: transparent;
-    border-color: #000;
-    border-width: 1pt;
-    border-radius: 2vw;
-    font-size: medium;
+	  justify-content: flex-start;
+	  align-items: center;
 	  position: relative;
   }
 
-  button:hover {
-    cursor: pointer;
-    background-color: #fff;
+  .filter-tab-edit-modal-item {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    position: relative;
+  }
+
+  .filter-tab-edit-modal-item-sub {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+    position: relative;
+  }
+
+  .filter-tab-edit-modal-item-sub-container {
+    flex-basis: 100%;
+
+    margin: 0.5vw;
+    padding: 0.5vw;
+
+    background-color: #E8ECED;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .filter-tab-edit-model-item-expression {
+    padding: 0.2em 0.2em;
+    font-size: small;
+  }
+
+  .filter-tab-selected {
+    background-color: #B2DBE6;
+  }
+
+  .filter-tab-edit-selected {
+    background-color: #3C9EB9;
   }
 
   .alerts {

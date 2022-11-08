@@ -3,79 +3,112 @@
 <!-- This navbar takes advantage of both flex and grid layouts for positioning elements; feel free to redesign as you see fit! -->
 
 <template>
-  <nav>
-    <div class="left">
-      <img src="../../public/logo.svg">
-      <h1 class="title">
-        Fritter
-      </h1>
-    </div>
-    <div class="right">
-      <router-link to="/">
-        Home
-      </router-link>
-      <router-link
-        v-if="$store.state.username"
-        to="/account"
-      >
-        Account
-      </router-link>
-      <router-link
-        v-else
-        to="/login"
-      >
-        Login
-      </router-link>
-    </div>
-    <section class="alerts">
-      <article
-        v-for="(status, alert, index) in $store.state.alerts"
-        :key="index"
-        :class="status"
-      >
-        <p>{{ alert }}</p>
-      </article>
-    </section>
-  </nav>
+  <div>
+    <nav>
+      <div class="left">
+        <FilterTabBar v-if="$store.state.username && $route.name==='Home'"
+          :filters="this.$store.state.customFilters"
+        />
+        <router-link v-else class="round-click" to="/">
+          Fritter
+        </router-link>
+      </div>
+      <div class="right">
+        <button v-if="$store.state.username"
+          class="round-click"
+          @click="startCreatingFreet"
+        >
+          📝
+        </button>
+        <router-link v-if="$store.state.username"
+          class="round-click"
+          to="/account"
+        >
+          Account
+        </router-link>
+        <router-link v-else
+          class="round-click"
+          to="/login"
+        >
+          Login
+        </router-link>
+      </div>
+      <section class="alerts">
+        <article
+          v-for="(status, alert, index) in $store.state.alerts"
+          :key="index"
+          :class="status"
+        >
+          <p>{{ alert }}</p>
+        </article>
+      </section>
+    </nav>
+    <Modal
+      v-if="creatingFreet"
+      :id="'createFreet'"
+      :closeLabel="'Cancel'"
+      @close="stopCreatingFreet"
+    >
+      <CreateFreetForm
+        @done="stopCreatingFreet"
+      />
+    </Modal>
+  </div>
 </template>
+
+<script>
+import Modal from '../common/Modal.vue';
+import FilterTabBar from '../Filter/FilterTabBar.vue';
+import CreateFreetForm from '../Freet/CreateFreetForm.vue';
+
+export default {
+  name: 'NavBar',
+  components: {Modal, FilterTabBar, CreateFreetForm},
+  data() {
+    return {
+      creatingFreet: false,
+    };
+  },
+  methods: {
+    startCreatingFreet() {
+      this.creatingFreet = true;
+    },
+    stopCreatingFreet() {
+      this.creatingFreet = false;
+    },
+  },
+};
+</script>
 
 <style scoped>
 nav {
-    padding: 1vw 2vw;
-    background-color: #ccc;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-}
-
-.title {
-    font-size: 32px;
-    margin: 0 5px;
-}
-
-img {
-    height: 32px;
+  padding: 1vw 2vw;
+  background-color: #3C9EB9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
 }
 
 .left {
+  padding: none;
+  margin: 0;
 	display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
 	align-items: center;
 }
 
 .right {
-    font-size: 20px;
-    display: grid;
-    gap: 16px;
-    grid-auto-flow: column;
-    align-items: center;
-}
-
-.right a {
-    margin-left: 5px;
+  padding: none;
+  margin: 0;
+	display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+	align-items: center;
 }
 
 .alerts {
-    width: 25%;
+  width: 25%;
 }
 </style>

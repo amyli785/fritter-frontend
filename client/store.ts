@@ -18,7 +18,7 @@ const store = new Vuex.Store({
     currentFilter: filterAll,
     freets: [], // All freets created in the app
     username: null, // Username of the logged in user
-    alerts: {} // global success/error messages encountered during submissions to non-visible forms
+    alerts: {}, // global success/error messages encountered during submissions to non-visible forms
   },
   mutations: {
     alert(state, payload) {
@@ -39,19 +39,21 @@ const store = new Vuex.Store({
     },
     updateCurrentFilter(state, currentFilter) {
       /**
-       * TODO
+       * Update the stored current filter to the specified one.
+       * @param currentFilter - new current filter to set
        */
       state.currentFilter = currentFilter;
     },
     updateCustomFilters(state, customFilters) {
       /**
-       * TODO
+       * Update the stored custom filters to the specified ones.
+       * @param customFilters - new custom filters to set
        */
       state.customFilters = customFilters;
     },
     async refreshCustomFilters(state) {
       /**
-       * TODO
+       * Request the server for the currently available freets.
        */
       const url = '/api/filters';
       const res = await fetch(url).then(async r => r.json());

@@ -1,30 +1,107 @@
-<script>
-import BlockForm from '@/components/common/BlockForm.vue';
+<template>
+  <form class="form-container" @submit.prevent="submit">
+    <article class="form-items-container">
+      <div class="form-item-container">
+        <label class="form-item-label" for="expression-input">expression</label>
+        <input class="form-item-input"
+          name="expression"
+          :value="expression"
+          id="expression-input"
+          @input="expression = $event.target.value"
+        >
+      </div>
+      <div class="form-item-container">
+        <label class="form-item-label" for="name-input">name</label>
+        <input class="form-item-input"
+          name="name"
+          :value="name"
+          id="name-input"
+          @input="name = $event.target.value"
+        >
+      </div>
+    </article>
+    <button class="round-click">✓</button>
+  </form>
+</template>
 
+<script>
 export default {
   name: 'CreateFilterForm',
-  mixins: [BlockForm],
   data() {
     return {
-      url: '/api/filters',
-      method: 'POST',
-      hasBody: true,
-      fields: [
-        {id: 'expression', label: 'Expression', value: ''},
-		    {id: 'name', label: 'Name', value: ''},
-      ],
-      title: 'Create a Filter',
-      refreshCustomFilters: true,
-      refreshFreets: true,
-      callback: () => {
-        const message = 'Successfully created a filter!';
-        this.$set(this.alerts, message, 'success');
-        setTimeout(() => this.$delete(this.alerts, message), 3000);
-        console.log(this.res);
-        this.$store.commit('updateCurrentFilter', this.res);
-        this.$store.commit('refreshFreets');
-      }
+      expression: "",
+      name: "",
     };
-  }
+  },
+  methods: {
+    async submit() {
+      const url = `/api/filters`;
+      const body = {
+        expression: this.expression,
+        name: this.name,
+      };
+      const options = {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {'Content-Type': 'application/json'},
+      };
+
+      try {
+        const r = await fetch(url, options);
+        if (!r.ok) {
+          const res = await r.json();
+          throw new Error(res.error);
+        }
+        this.$store.commit('refreshCustomFilters');
+        this.$emit('done');
+      } catch (e) {
+        console.log(e);
+        // TODO: deal with errors correctly
+      }
+    },
+  },
 };
 </script>
+
+<style scoped>
+.form-container {
+  flex-basis: 100%;
+
+  margin: 0.5vw;
+  padding: 0.5vw;
+
+  background-color: #E8ECED;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-items-container {
+  flex-basis: 100%;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.form-item-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-item-label {
+  padding: 0.2em 0.2em;
+  font-size: small;
+}
+
+.form-item-input {
+  padding: 0.2em 0.2em;
+  font-size: small;
+}
+
+.round-click, .round-click:link, .round-click:hover, .round-click:visited {
+  background-color: #B2DBE6;
+}
+</style>
+
