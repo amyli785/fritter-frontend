@@ -1,21 +1,21 @@
 <template>
 	<main>
-    <div v-if="this.userId" class="user-page-container">
+    <div v-if="userId" class="user-page-container">
       <section class="user-header-container">
         <RRPictureComponent class="user-picture-container"
-          :username="this.username"
+          :username="username"
         />
         <h3 class="user-handle">
-        @{{ this.username }}
+        @{{ username }}
         </h3>
         <UserUnFollowButton
           v-if="$store.state.username"
           class="round-click user-un-follow-button"
-          :username="this.username"
+          :username="username"
         />
       </section>
       <UserFreets v-if="$store.state.username"
-        :username="this.username"
+        :username="username"
       />
     </div>
     <div v-else class="user-page-container">
@@ -33,7 +33,11 @@ import UserFreets from '../User/UserFreets.vue';
 
 export default {
   name: 'UserPage',
-  components: {RRPictureComponent, UserUnFollowButton, UserFreets},
+  components: {
+    RRPictureComponent,
+    UserUnFollowButton,
+    UserFreets
+  },
   data() {
     return {
       username: this.$route.params.username,
@@ -101,8 +105,8 @@ export default {
 }
 
 .user-picture-container {
-  width: 5cm;
-  height: 5cm;
+  width: 120pt;
+  height: 120pt;
 }
 
 </style>

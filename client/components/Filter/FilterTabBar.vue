@@ -69,12 +69,17 @@
   import CreateFilterForm from '../Filter/CreateFilterForm.vue';
   import EditFilterForm from '../Filter/EditFilterForm.vue';
   import DeleteFilterForm from '../Filter/DeleteFilterForm.vue';
-  import CreateFreetForm from '../Freet/CreateFreetForm.vue';
   import Modal from '../common/Modal.vue';
   
   export default {
     name: 'FilterTabBar',
-    components: {FilterTabComponent, CreateFilterForm, EditFilterForm, DeleteFilterForm, CreateFreetForm, Modal},
+    components: {
+      FilterTabComponent,
+      CreateFilterForm,
+      EditFilterForm,
+      DeleteFilterForm,
+      Modal
+    },
     props: {
       filters: {
       type: Array,

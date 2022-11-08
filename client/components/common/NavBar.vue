@@ -44,7 +44,6 @@
     <Modal
       v-if="creatingFreet"
       title="Compose a Freet"
-      :id="'createFreet'"
       @close="stopCreatingFreet"
     >
       <CreateFreetForm

@@ -12,21 +12,18 @@
 		<header>
 		  <h2>Welcome to Fritter!</h2>
 		</header>
-		<article>
-		  <h3>
-			<router-link to="/login">Sign in</router-link> to create, edit, and delete freets.
-		  </h3>
-		</article>
+		<NotLoggedIn />
 	  </section>
 	</main>
 </template>
   
 <script>
+  import NotLoggedIn from '../common/NotLoggedIn.vue';
   import FeedFreets from '../Feed/FeedFreets.vue';
   
   export default {
     name: 'FeedPage',
-    components: {FeedFreets},
+    components: {NotLoggedIn, FeedFreets},
   };
 </script>
   
