@@ -2,24 +2,19 @@
 <!-- This is just an example; feel free to define any reusable components you want! -->
 
 <template>
-  <form @submit.prevent="submit">
-    <h3>{{ title }}</h3>
+  <form class="form-container" @submit.prevent="submit">
     <article
       v-if="fields.length"
+      class="form-items-container"
     >
       <div
         v-for="field in fields"
+        class="form-item-container"
         :key="field.id"
       >
-        <label :for="field.id">{{ field.label }}:</label>
-        <textarea
-          v-if="field.id === 'content'"
-          :name="field.id"
-          :value="field.value"
-          @input="field.value = $event.target.value"
-        />
+        <label class="form-item-label" :for="field.id">{{ field.label }}:</label>
         <input
-          v-else
+          class="form-item-input"
           :type="field.id === 'password' ? 'password' : 'text'"
           :name="field.id"
           :value="field.value"
@@ -27,20 +22,7 @@
         >
       </div>
     </article>
-    <button
-      type="submit"
-    >
-      {{ title }}
-    </button>
-    <section class="alerts">
-      <article
-        v-for="(status, alert, index) in alerts"
-        :key="index"
-        :class="status"
-      >
-        <p>{{ alert }}</p>
-      </article>
-    </section>
+    <button class="round-click" type="submit">✓</button>
   </form>
 </template>
 
@@ -58,7 +40,6 @@ export default {
       hasBody: false, // Whether or not form request has a body
       setUsername: false, // Whether or not stored username should be updated after form submission
       refreshFreets: false, // Whether or not stored freets should be updated after form submission
-      alerts: {}, // Displays success/error messages encountered during form submission
       callback: null // Function to run after successful form submission
     };
   },
@@ -84,15 +65,14 @@ export default {
 
       try {
         const r = await fetch(this.url, options);
+        const res = await r.json();
         if (!r.ok) {
           // If response is not okay, we throw an error and enter the catch block
-          const res = await r.json();
           throw new Error(res.error);
         }
 
         if (this.setUsername) {
-          const text = await r.text();
-          const res = text ? JSON.parse(text) : {user: null};
+          const username = res ? res.user.username : null;
           this.$store.commit('setUsername', res.user ? res.user.username : null);
         }
 
@@ -105,11 +85,11 @@ export default {
         }
 
         if (this.callback) {
-          this.callback();
+          this.callback(res);
         }
       } catch (e) {
-        this.$set(this.alerts, e, 'error');
-        setTimeout(() => this.$delete(this.alerts, e), 3000);
+        console.log(e);
+        // TODO: deal with errors correctly
       }
     }
   }
@@ -117,36 +97,43 @@ export default {
 </script>
 
 <style scoped>
-form {
-  border: 1px solid #111;
-  padding: 0.5rem;
+.form-container {
+  flex-basis: 100%;
+
+  margin: 0.5vw;
+  padding: 0.5vw;
+
+  background-color: #E8ECED;
+
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 14px;
-  position: relative;
+  align-items: center;
 }
 
-article > div {
+.form-items-container {
+  flex-basis: 100%;
+
   display: flex;
   flex-direction: column;
 }
 
-form > article p {
-  margin: 0;
+.form-item-container {
+  display: flex;
+  flex-direction: column;
 }
 
-form h3,
-form > * {
-  margin: 0.3em 0;
+.form-item-label {
+  padding: 0.2em 0.2em;
+  font-size: small;
 }
 
-form h3 {
-  margin-top: 0;
+.form-item-input {
+  padding: 0.2em 0.2em;
+  font-size: small;
 }
 
-textarea {
-   font-family: inherit;
-   font-size: inherit;
+.round-click, .round-click:link, .round-click:hover, .round-click:visited {
+  background-color: #B2DBE6;
 }
 </style>
