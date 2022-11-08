@@ -45,7 +45,7 @@ export default {
   z-index: 1;
 
   background-color: rgba(0, 0, 0, 0.8);
-  transition-duration: 0s;
+  transition: none 0s;
 
   display: flex;
   flex-flow: column nowrap;
@@ -58,7 +58,7 @@ export default {
   width: 50%;
   padding: 1vw;
   background-color: #fff;
-  transition-duration: 0s;
+  transition: none 0s;
 
   display: flex;
   flex-direction: column;
