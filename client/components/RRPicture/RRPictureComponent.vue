@@ -59,7 +59,7 @@ export default {
   height: 100%;
 
   border-radius: 50%;
-  background-color: lightgray;
+  background-color: #e8eced;
   overflow: hidden;
 
   display: flex;

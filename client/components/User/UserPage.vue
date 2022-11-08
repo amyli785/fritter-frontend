@@ -1,22 +1,28 @@
 <template>
 	<main>
-    <section v-if="this.userId">
-      <header>
+    <div v-if="this.userId" class="user-page-container">
+      <section class="user-header-container">
+        <RRPictureComponent class="user-picture-container"
+          :username="this.username"
+        />
+        <h3 class="user-handle">
         @{{ this.username }}
-      </header>
-      <RRPictureComponent class="user-picture"
-        :username="this.username"
-      />
-      <UserUnFollowButton v-if="$store.state.username"
-        :username="this.username"
-      />
+        </h3>
+        <UserUnFollowButton
+          v-if="$store.state.username"
+          class="round-click user-un-follow-button"
+          :username="this.username"
+        />
+      </section>
       <UserFreets v-if="$store.state.username"
         :username="this.username"
       />
-    </section>
-    <section v-else>
-      User not found: @{{ this.username }}
-    </section>
+    </div>
+    <div v-else class="user-page-container">
+      <h1>
+        User not found: @{{ this.username }}
+      </h1>
+    </div>
   </main>
 </template>
 
@@ -77,7 +83,24 @@ export default {
 
 <style scoped>
 
-.user-picture {
+.user-page-container {
+  margin: 0;
+  padding: 0;
+}
+
+.user-header-container {
+  margin: 24pt 0;
+  padding: 12pt;
+
+  background-color: #b2dbe6;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.user-picture-container {
   width: 5cm;
   height: 5cm;
 }
