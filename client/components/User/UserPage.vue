@@ -102,6 +102,12 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  gap: 12pt;
+}
+
+.user-handle {
+  margin: 0;
+  padding: 0;
 }
 
 .user-picture-container {

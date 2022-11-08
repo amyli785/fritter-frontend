@@ -100,7 +100,8 @@ main {
 .invis-click, .invis-click:link, .invis-click:hover, .invis-click:visited {
   border: none;
 
-  color: #fff;
+  color: #000;
+  background-color: rgba(0, 0, 0, 0);
   text-decoration: none;
   font-size: medium;
 }

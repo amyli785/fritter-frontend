@@ -5,9 +5,13 @@
   <main>
     <div v-if="username" class="account-page-container">
       <section class="account-header-container">
-        <RRPictureComponent class="account-picture-container"
-          :username="username"
-        />
+        <button class="invis-click"
+          @click="showEditRRPicture = true"
+        >
+          <RRPictureComponent class="account-picture-container"
+            :username="username"
+          />
+        </button>
         <h3 class="account-handle">
         @{{ username }}
         </h3>
@@ -33,18 +37,54 @@
             Following
           </button>
         </div>
+        <div class="account-button-row-container">
+          <button
+            class="round-click"
+            @click="showAccountSettings = true"
+          >
+            Account Settings
+          </button>
+        </div>
       </section>
-      <UserFreets v-if="username"
+      <UserFreets
         :username="username"
       />
     </div>
-		<NotLoggedIn />
+		<NotLoggedIn v-else />
+    <Modal
+      v-if="showEditRRPicture"
+      title="Edit Profile Picture"
+      @close="showEditRRPicture = false"
+    >
+      Edit profile picture component
+    </Modal>
+    <Modal
+      v-if="showEditAudienceGroups"
+      title="Edit Audience Groups"
+      @close="showEditAudienceGroups = false"
+    >
+      Edit audience groups component
+    </Modal>
     <Modal
       v-if="showFollowers"
       title="Followers"
       @close="showFollowers = false"
     >
       Followers list
+    </Modal>
+    <Modal
+      v-if="showFollowing"
+      title="Following"
+      @close="showFollowing = false"
+    >
+      Following list
+    </Modal>
+    <Modal
+      v-if="showAccountSettings"
+      title="Account Settings"
+      @close="showAccountSettings = false"
+    >
+      Account settings component
     </Modal>
     <!-- <section>
       <header>
@@ -88,9 +128,11 @@ export default {
   data() {
     return {
       username: this.$store.state.username,
+      showEditRRPicture: false,
       showEditAudienceGroups: false,
       showFollowers: false,
       showFollowing: false,
+      showAccountSettings: false,
     };
   },
 };
@@ -113,6 +155,12 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  gap: 12pt;
+}
+
+.account-handle {
+  margin: 0;
+  padding: 0;
 }
 
 .account-button-row-container {

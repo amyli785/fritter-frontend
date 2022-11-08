@@ -1,5 +1,5 @@
 <template>
-  <a :href="`/user/${this.username}`" class="user-container">
+  <a :href="`/user/${this.username}`" class="user-container invis-click">
     <RRPictureComponent class="user-picture-container"
       :username="this.username"
     />
