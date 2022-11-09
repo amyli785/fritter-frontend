@@ -30,7 +30,6 @@ export default {
   data() {
     return {
       content: "",
-      audience: this.freet.audience,
       groups: {},
     }
   },
@@ -39,7 +38,6 @@ export default {
       const url = '/api/freets';
       const httpBody = {
         content: this.content,
-        audience: this.audience,
         responseTo: this.freet._id,
       };
       const options = {
