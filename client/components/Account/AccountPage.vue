@@ -132,6 +132,11 @@ export default {
   },
   methods: {
     home() {
+      this.$store.commit('updateCurrentFilter', this.$store.state.filterAll);
+      this.$store.commit('updateCustomFilters', []);
+      this.$store.commit('updateGroups', []);
+      this.$store.commit('updateFreets', []);
+      this.$store.commit('resetRRPictures', [])
       this.$router.push({name: 'Home'});
     }
   }
