@@ -5,13 +5,14 @@
   <main>
     <div v-if="$store.state.username" class="account-page-container">
       <section class="account-header-container">
-        <div class="account-picture-container"
-          @click="showEditRRPicture = true"
-        >
-          <RRPictureComponent class="invis-click"
-            :key="JSON.stringify($store.state.rrpictures)"
-            :username="$store.state.username"
-          />
+        <div class="account-picture-area-container invis-click" @click="showEditRRPicture = true">
+          <div class="account-picture-container">
+            <RRPictureComponent
+              :key="JSON.stringify($store.state.rrpictures)"
+              :username="$store.state.username"
+            />
+          </div>
+          <p class="account-picture-area-text">Click to Edit Profile Picture</p>
         </div>
         <h3 class="account-handle" :key="$store.state.username">
         @{{ $store.state.username }}
@@ -143,5 +144,17 @@ export default {
   margin: 0;
   padding: 0;
 }
+
+.invis-click, .invis-click:link, .invis-click:hover, .invis-click:visited {
+  padding: 1vmax;
+
+  background-color: #3c9eb9;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1vmax;
+}
+
 
 </style>

@@ -177,9 +177,28 @@ main {
   gap: 1vmax;
 }
 
+.account-picture-area-container {
+  padding: 1vmax;
+
+  background-color: #3c9eb9;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1vmax;
+}
+
 .account-picture-container {
-  width: 8vmax;
-  height: 8vmax;
+  width: 12vmax;
+  height: 12vmax;
+}
+
+.account-picture-area-text {
+  margin: 0;
+  padding: 0;
+
+  color: #fff;
+  font-size: smaller;
 }
 
 .account-handle {
