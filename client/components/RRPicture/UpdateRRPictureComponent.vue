@@ -2,13 +2,13 @@
   <div class="update-rrpicture-container">
     <section class="update-rrpicture-bar">
       <button 
-        :class="'update-rrpicture-bar-button round-click ' + (showCurrent ? 'round-click-selected' : 'round-click-unselected')"
+        :class="'update-rrpicture-bar-button round-click ' + (showCurrent ? 'show-current-previous-selected' : 'show-current-previous-unselected')"
         @click="showCurrent = true"
       >
         Current Picture
       </button>
       <button
-        :class="'update-rrpicture-bar-button round-click ' + (!showCurrent ? 'round-click-selected' : 'round-click-unselected')"
+        :class="'update-rrpicture-bar-button round-click ' + (!showCurrent ? 'show-current-previous-selected' : 'show-current-previous-unselected')"
         @click="showCurrent = false"
       >
         Previous Pictures
@@ -34,10 +34,34 @@
       />
     </section>
     <section
-      v-else
+      v-else-if="rrpicturePreviousList.length > 0"
       class="update-rrpicture-content-container"
     >
-      previous pictures editor
+      <div class="update-rrpicture-previous-pictures-container">
+        <div
+          v-for="rrpicturePreviousOne in rrpicturePreviousList"
+          class="update-rrpicture-previous-picture-container"
+          :key="rrpicturePreviousOne._id"
+          @click="rrpicturePrevious = rrpicturePreviousOne"
+        >
+          <RRPictureComponent
+            :class="'invis-click ' + (rrpicturePrevious && rrpicturePreviousOne._id === rrpicturePrevious._id ? 'update-rrpicture-previous-picture-selected' : 'update-rrpicture-previous-picture-unselected' )"
+            :username="$store.state.username"
+            :rrpictureOverwrite="rrpicturePreviousOne"
+          />
+        </div>
+      </div>
+      <RevertPreviousRRPictureForm
+        v-if="rrpicturePrevious"
+        :rrpictureCurrent="rrpictureCurrent"
+        :rrpicture="rrpicturePrevious"
+        @done="doneCurrent"
+      />
+      <DeletePreviousRRPictureForm
+        v-if="rrpicturePrevious"
+        :rrpicture="rrpicturePrevious"
+        @done="donePreviousDelete"
+      />
     </section>
   </div>
 </template>
@@ -46,6 +70,8 @@
 import RRPictureComponent from '../RRPicture/RRPictureComponent.vue';
 import AddCurrentRRPictureForm from '../RRPicture/AddCurrentRRPictureForm.vue';
 import DeleteCurrentRRPictureForm from '../RRPicture/DeleteCurrentRRPictureForm.vue';
+import RevertPreviousRRPictureForm from '../RRPicture/RevertPreviousRRPictureForm.vue';
+import DeletePreviousRRPictureForm from '../RRPicture/DeletePreviousRRPictureForm.vue';
 
 export default {
   name: 'UpdateRRPictureComponent',
@@ -53,18 +79,22 @@ export default {
     RRPictureComponent,
     AddCurrentRRPictureForm,
     DeleteCurrentRRPictureForm,
+    RevertPreviousRRPictureForm,
+    DeletePreviousRRPictureForm,
   },
   data() {
     return {
       showCurrent: true,
       rrpictureCurrent: null,
+      rrpicturePrevious: null,
+      rrpicturePreviousList: [],
     };
   },
   methods: {
     async getPicture() {
       this.$store.commit('resetRRPictures');
       const username = this.$store.state.username;
-      const url = `/api/rrpictures/current/${username}`;
+      const url = `/api/rrpictures/current`;
       try {
         const r = await fetch(url);
         const res = await r.json();
@@ -79,13 +109,33 @@ export default {
         // TODO: deal with errors correctly
       }
     },
+    async getPreviousList() {
+      const url = `/api/rrpictures/previous`;
+      try {
+        const r = await fetch(url);
+        const res = await r.json();
+        if (!r.ok) {
+          throw new Error(res.error);
+        }
+
+        this.rrpicturePreviousList = res;
+      } catch (e) {
+        console.log(e);
+        // TODO: deal with errors correctly
+      }
+    },
     doneCurrent() {
       this.getPicture();
       this.$emit('close');
-    }
+    },
+    donePreviousDelete() {
+      this.getPreviousList();
+      this.rrpicturePrevious = null;
+    },
   },
   mounted() {
     this.getPicture();
+    this.getPreviousList();
   },
 };
 </script>
@@ -130,21 +180,43 @@ export default {
   gap: 1vmax;
 }
 
+.update-rrpicture-previous-pictures-container {
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 1vmax;
+}
+
 .update-rrpicture-current-picture-container {
   width: 24vmax;
   height: 24vmax;
 }
 
-.round-click-selected {
+.update-rrpicture-previous-picture-container {
+  width: 4vmax;
+  height: 4vmax;
+}
+
+.show-current-previous-selected {
   border-color: #000;
 }
 
-.round-click-unselected, .round-click:hover {
+.show-current-previous-unselected, .round-click:hover {
   border-color: #B2DBE6;
 }
 
 .round-click, .round-click:link, .round-click:hover, .round-click:visited {
   background-color: #B2DBE6;
+}
+
+.update-rrpicture-previous-picture-selected {
+  border: 0.2vmax solid #000;
+}
+.update-rrpicture-previous-picture-unselected {
+  border: 0.2vmax solid transparent;
 }
 
 </style>

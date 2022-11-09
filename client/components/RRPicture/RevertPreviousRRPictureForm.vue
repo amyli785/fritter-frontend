@@ -1,39 +1,9 @@
 <template>
   <form class="form-container" @submit.prevent="submit">
     <h3 class="form-title">
-      Add New Profile Picture
+      Revert to Previous Profile Picture
     </h3>
-    <p class="form-content">
-      Invalid links to images will not render correctly.
-    </p>
     <article class="form-fields-container">
-    <div class="form-field-container">
-      <label class="form-field-label" for="picture-type-select">type</label>
-      <select
-        class="form-field-input"
-        name="pictureType"
-        id="picture-type-select"
-      >
-        <option
-          v-for="pictureTypeOption in pictureTypeOptions"
-          :key="pictureTypeOption.value"
-          :value="pictureTypeOption.value"
-          @click="pictureType = pictureTypeOption"
-        >
-          {{pictureTypeOption.name}}
-        </option>
-      </select>
-    </div>
-    <div class="form-field-container">
-      <label class="form-field-label" for="picture-input">picture ({{pictureType.name}})</label>
-      <input
-        class="form-field-input"
-        name="picture"
-        :value="picture"
-        id="picture-input"
-        @input="picture = $event.target.value"
-      >
-    </div>
     <div class="form-field-container" v-if="rrpictureCurrent">
       <div class="form-field-checkbox-container">
         <input
@@ -48,14 +18,11 @@
       </div>
     </div>
     </article>
-    <button class="form-submit round-click" type="submit">Add</button>
+    <button class="form-submit round-click" type="submit">Revert</button>
   </form>
 </template>
   
 <script>
-
-  const pictureTypeRawString = {name: 'string', value: 'RawString'};
-  const pictureTypeLink = {name: 'link', value: 'Link'}
 
   export default {
   name: 'AddCurrentRRPictureForm',
@@ -63,12 +30,13 @@
     rrpictureCurrent: {
       type: Object,
     },
+    rrpicture: {
+      type: Object,
+      required: true,
+    },
   },
   data() {
     return {
-      picture: "",
-      pictureType: pictureTypeRawString,
-      pictureTypeOptions: [pictureTypeRawString, pictureTypeLink],
       maintainPrevious: false,
     };
   },
@@ -76,8 +44,8 @@
     async submit() {
     const url = `/api/rrpictures/current`;
     const body = {
-      picture: this.picture,
-      pictureType: this.pictureType.value,
+      picture: this.rrpicture.picture,
+      pictureType: this.rrpicture.pictureType,
       maintainPrevious: this.maintainPrevious.toString(),
     };
     const options = {
@@ -97,10 +65,6 @@
       console.log(e);
       // TODO: deal with errors correctly
     }
-  
-    this.picture="";
-    this.pictureType=pictureTypeRawString;
-    this.maintainPrevious=false;
     },
   },
   };
