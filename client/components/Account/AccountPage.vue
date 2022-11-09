@@ -53,7 +53,7 @@
         :username="$store.state.username"
       />
     </div>
-    <NotLoggedIn v-else />
+    <NotLoggedIn v-else class="account-not-logged-in-container" />
     <Modal
       v-if="showEditRRPicture"
       title="Update Profile Picture"
@@ -143,6 +143,11 @@ export default {
 .account-page-container {
   margin: 0;
   padding: 0;
+}
+
+.account-not-logged-in-container {  
+  margin: 6vh 0;
+  padding: 2vw;
 }
 
 .invis-click, .invis-click:link, .invis-click:hover, .invis-click:visited {
