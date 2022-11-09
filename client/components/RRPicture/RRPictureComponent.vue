@@ -1,11 +1,16 @@
 <template>
   <article class="rrpicture-container">
-    <div v-if="!rrpicture">
+    <div
+      v-if="!rrpicture"
+      class="rrpicture-text"
+    >
       None
     </div>
-    <div v-else-if="rrpicture.pictureType === 'RawString'">
+    <div
+      v-else-if="rrpicture.pictureType === 'RawString'"
+      class="rrpicture-text"
+    >
       {{ rrpicture.picture }}
-      <!-- TODO: force text to fit -->
     </div>
     <img v-else
       class="rrpicture-image"
@@ -87,6 +92,17 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-content: center;
+  align-items: center;
+}
+
+.rrpicture-text {
+  width: 100%;
+  height: 100%;
+
+  font-size: smaller;
+
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
 
