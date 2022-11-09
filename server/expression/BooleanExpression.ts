@@ -1,5 +1,6 @@
 import type {Types} from 'mongoose';
 import mongoose from 'mongoose';
+import UserCollection from '../user/collection';
 import FreetCollection from '../freet/collection';
 import TagCollection from '../tag/collection';
 
@@ -8,7 +9,7 @@ export interface BooleanExpression {
     // Data type definition
     //    BooleanExpression = AuthorExpression(username:string)
     //                        + TagExpression(label:string)
-  //                        + NotExpression(sub:BooleanExpression)
+    //                        + NotExpression(sub:BooleanExpression)
     //                        + AndExpression(left:BooleanExpression, right:BooleanExpression)
     //                        + OrExpression(left:BooleanExpression, right:BooleanExpression)
 
@@ -23,6 +24,10 @@ export class AuthorExpression implements BooleanExpression {
     }
     
     public async freetIds(): Promise<Array<Types.ObjectId>> {
+        const user = await UserCollection.findOneByUsername(this.username);
+        if (!user) {
+            return [];
+        }
         return (await FreetCollection.findAllByUsername(this.username)).map((freet) => freet._id);
     }
     
