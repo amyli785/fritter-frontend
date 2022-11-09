@@ -11,10 +11,10 @@ export default {
       hasBody: true,
       fields: [
         {id: 'expression', label: 'expression', value: ''},
-        {id: 'name', label: 'name', value: ''}
+        {id: 'name', label: 'eame', value: ''}
       ],
       title: "Create New Filter",
-      submitText: "",
+      submitText: "Create",
       callback: (res) => {
         this.$store.commit('refreshCustomFilters');
         this.$store.commit('updateCurrentFilter', res);

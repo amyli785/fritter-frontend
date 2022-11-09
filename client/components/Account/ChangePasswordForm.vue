@@ -12,10 +12,10 @@ export default {
       method: 'PATCH',
       hasBody: true,
       fields: [
-        {id: 'password', label: 'Password', value: ''}
+        {id: 'password', label: 'password', value: ''}
       ],
-      title: 'Change password',
-      submitText: '',
+      title: 'Change Password',
+      submitText: 'Change Password',
       callback: () => {
         const message = 'Successfully changed password!';
         this.$store.commit('alert', {

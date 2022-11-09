@@ -13,10 +13,10 @@ export default {
       hasBody: true,
       setUsername: true,
       fields: [
-        {id: 'username', label: 'Username', value: ''}
+        {id: 'username', label: 'username', value: ''}
       ],
-      title: 'Change username',
-      submitText: '',
+      title: 'Change Username',
+      submitText: 'Change Username',
       callback: () => {
         const message = 'Successfully changed username!';
         this.$store.commit('alert', {

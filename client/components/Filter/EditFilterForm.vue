@@ -20,7 +20,7 @@ export default {
         {id: 'name', label: 'new name', value: ''}
       ],
       title: "Edit Filter",
-      submitText: "",
+      submitText: "Update",
       callback: (res) => {
         this.$store.commit('refreshCustomFilters');
         this.$store.commit('updateCurrentFilter', res);
