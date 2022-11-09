@@ -5,6 +5,7 @@
     </div>
     <div v-else-if="this.rrpicture.pictureType === 'RawString'">
       {{ this.rrpicture.picture }}
+      <!-- TODO: force text to fit -->
     </div>
     <img v-else
       class="rrpicture-image"

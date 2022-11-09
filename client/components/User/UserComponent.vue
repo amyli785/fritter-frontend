@@ -8,7 +8,7 @@
         :username="username"
       />
     </div>
-    <h3>
+    <h3 class="user-handle">
       @{{ username }}
     </h3>
   </router-link>
@@ -41,8 +41,13 @@ export default {
 }
 
 .user-picture-container {
-  width: 6vmax;
-  height: 6vmax;
+  width: 4vmax;
+  height: 4vmax;
+}
+
+.user-handle {
+  margin: 0;
+  padding: 1vmax;
 }
 
 </style>

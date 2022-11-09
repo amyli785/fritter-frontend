@@ -50,7 +50,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: stretch;
+  align-items: flex-start;
   gap: 1vmax;
 }
 

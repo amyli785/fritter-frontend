@@ -60,7 +60,6 @@ export default {
         }
         const res = await r.json();
         this.groups = res;
-        console.log(this.groups);
       } catch(e) {
         console.log(e);
         // TODO: deal with errors correctly
