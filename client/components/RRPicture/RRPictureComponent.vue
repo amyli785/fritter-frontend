@@ -62,6 +62,9 @@ export default {
   background-color: #e8eced;
   overflow: hidden;
 
+  color: #000;
+  text-decoration: none;
+
   display: flex;
   flex-direction: row;
   justify-content: center;

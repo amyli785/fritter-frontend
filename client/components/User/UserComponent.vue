@@ -1,12 +1,17 @@
 <template>
-  <a :href="`/user/${this.username}`" class="user-container invis-click">
-    <RRPictureComponent class="user-picture-container"
-      :username="this.username"
-    />
+  <router-link
+    class="user-container invis-click"
+    :to="`/user/${username}`"
+  >
+    <div class="user-picture-container">
+      <RRPictureComponent
+        :username="username"
+      />
+    </div>
     <h3>
-      @{{ this.username }}
+      @{{ username }}
     </h3>
-  </a>
+  </router-link>
 </template>
 
 <script>
