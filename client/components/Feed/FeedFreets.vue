@@ -1,5 +1,5 @@
 <template>
-	<section
+  <section
     v-if="$store.state.freets.length"
   >
     <FreetComponent

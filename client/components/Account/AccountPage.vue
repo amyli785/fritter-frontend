@@ -52,7 +52,7 @@
         :username="$store.state.username"
       />
     </div>
-		<NotLoggedIn v-else />
+    <NotLoggedIn v-else />
     <Modal
       v-if="showEditRRPicture"
       title="Update Profile Picture"

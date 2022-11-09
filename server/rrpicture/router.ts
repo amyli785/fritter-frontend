@@ -18,15 +18,15 @@ const router = express.Router();
  * @throws {403} - if the user is not logged in
  */
 router.get(
-	'/current',
-	[
-		userValidator.isUserLoggedIn,
-	],
-	async (req: Request, res: Response) => {
-		const rrpicture = await RRPictureCollection.findCurrentByUser(req.session.userId);
-		const response = rrpicture ? util.constructRRPictureResponse(rrpicture): null;
-		res.status(200).json(response);
-	},
+  '/current',
+  [
+    userValidator.isUserLoggedIn,
+  ],
+  async (req: Request, res: Response) => {
+    const rrpicture = await RRPictureCollection.findCurrentByUser(req.session.userId);
+    const response = rrpicture ? util.constructRRPictureResponse(rrpicture): null;
+    res.status(200).json(response);
+  },
 );
 
 /**
@@ -38,16 +38,16 @@ router.get(
  * @throws {404} - if `username` cannot be found
  */
 router.get(
-	'/current/:username?',
-	[
-		userValidator.isUsernameExists,
-	],
-	async (req: Request, res: Response) => {
-		const user = await UserCollection.findOneByUsername(req.params.username);
-		const rrpicture = await RRPictureCollection.findCurrentByUser(user._id.toString());
-		const response = rrpicture ? util.constructRRPictureResponse(rrpicture): null;
-		res.status(200).json(response);
-	},
+  '/current/:username?',
+  [
+    userValidator.isUsernameExists,
+  ],
+  async (req: Request, res: Response) => {
+    const user = await UserCollection.findOneByUsername(req.params.username);
+    const rrpicture = await RRPictureCollection.findCurrentByUser(user._id.toString());
+    const response = rrpicture ? util.constructRRPictureResponse(rrpicture): null;
+    res.status(200).json(response);
+  },
 );
 
 /**
@@ -63,33 +63,33 @@ router.get(
  * @throws {400} - if `picture` or `pictureType` is missing in the req or `pictureType` is an invalid value
  */
 router.post(
-	'/current',
-	[
-		userValidator.isUserLoggedIn,
-		rrpicturevalidator.isPictureAndTypeValid,
-	],
-	async (req: Request, res: Response) => {
-		const rrpictureCurrent = await RRPictureCollection.findCurrentByUser(req.session.userId);
-		const maintainPrevious = req.body.maintainPrevious==='true' || req.body.maintainPrevious==='on';
-		if (rrpictureCurrent){
-			if (maintainPrevious) {
-				RRPictureCollection.updateCurrentToPrevious(req.session.userId);
-			} else {
-				RRPictureCollection.deleteCurrentByUser(req.session.userId);
-			}
-		}
-		const rrpicture = await RRPictureCollection.addOne(
-			req.session.userId,
-			req.body.picture,
-			req.body.pictureType,
-			RRPictureStatus.Current,
-		);
+  '/current',
+  [
+    userValidator.isUserLoggedIn,
+    rrpicturevalidator.isPictureAndTypeValid,
+  ],
+  async (req: Request, res: Response) => {
+    const rrpictureCurrent = await RRPictureCollection.findCurrentByUser(req.session.userId);
+    const maintainPrevious = req.body.maintainPrevious==='true' || req.body.maintainPrevious==='on';
+    if (rrpictureCurrent){
+      if (maintainPrevious) {
+        RRPictureCollection.updateCurrentToPrevious(req.session.userId);
+      } else {
+        RRPictureCollection.deleteCurrentByUser(req.session.userId);
+      }
+    }
+    const rrpicture = await RRPictureCollection.addOne(
+      req.session.userId,
+      req.body.picture,
+      req.body.pictureType,
+      RRPictureStatus.Current,
+    );
 
-		res.status(201).json({
-			message: 'Your current profile picture was created successfully.',
-			rrpicture: util.constructRRPictureResponse(rrpicture),
-		});
-	},
+    res.status(201).json({
+      message: 'Your current profile picture was created successfully.',
+      rrpicture: util.constructRRPictureResponse(rrpicture),
+    });
+  },
 );
 
 /**
@@ -102,17 +102,17 @@ router.post(
  * @throws {409} - if the user does not have a current profile picture
  */
 router.delete(
-	'/current',
-	[
-		userValidator.isUserLoggedIn,
-		rrpicturevalidator.hasCurrentPicture,
-	],
-	async (req: Request, res: Response) => {
-		await RRPictureCollection.deleteCurrentByUser(req.session.userId);
-		res.status(200).json({
-			message: 'Your current profile picture was deleted successfully.'
-		});
-	}
+  '/current',
+  [
+    userValidator.isUserLoggedIn,
+    rrpicturevalidator.hasCurrentPicture,
+  ],
+  async (req: Request, res: Response) => {
+    await RRPictureCollection.deleteCurrentByUser(req.session.userId);
+    res.status(200).json({
+      message: 'Your current profile picture was deleted successfully.'
+    });
+  }
 );
 
 /**
@@ -124,15 +124,15 @@ router.delete(
  * @throws {403} - if the user is not logged in
  */
 router.get(
-	'/previous',
-	[
-		userValidator.isUserLoggedIn,
-	],
-	async (req: Request, res: Response) => {
-		const rrpictures = await RRPictureCollection.findPreviousByUser(req.session.userId);
-		const response = rrpictures.map(util.constructRRPictureResponse);
-		res.status(200).json(response);
-	},
+  '/previous',
+  [
+    userValidator.isUserLoggedIn,
+  ],
+  async (req: Request, res: Response) => {
+    const rrpictures = await RRPictureCollection.findPreviousByUser(req.session.userId);
+    const response = rrpictures.map(util.constructRRPictureResponse);
+    res.status(200).json(response);
+  },
 );
 
 /**
@@ -147,24 +147,24 @@ router.get(
  * @throws {400} - if `picture` or `pictureType` is in the wrong format or missing in the req
  */
 router.post(
-	'/previous',
-	[
-		userValidator.isUserLoggedIn,
-		rrpicturevalidator.isPictureAndTypeValid,
-	],
-	async (req: Request, res: Response) => {
-		const rrpicture = await RRPictureCollection.addOne(
-			req.session.userId,
-			req.body.picture,
-			req.body.pictureType,
-			RRPictureStatus.Previous.toString(),
-		);
-		const rrpictures = await RRPictureCollection.findPreviousByUser(req.session.userId);
-		res.status(200).json({
-			message: 'Your previous profile picture was created successfully.',
-			rrpictures: rrpictures.map(util.constructRRPictureResponse),
-		});
-	},
+  '/previous',
+  [
+    userValidator.isUserLoggedIn,
+    rrpicturevalidator.isPictureAndTypeValid,
+  ],
+  async (req: Request, res: Response) => {
+    const rrpicture = await RRPictureCollection.addOne(
+      req.session.userId,
+      req.body.picture,
+      req.body.pictureType,
+      RRPictureStatus.Previous.toString(),
+    );
+    const rrpictures = await RRPictureCollection.findPreviousByUser(req.session.userId);
+    res.status(200).json({
+      message: 'Your previous profile picture was created successfully.',
+      rrpictures: rrpictures.map(util.constructRRPictureResponse),
+    });
+  },
 );
 
 /**
@@ -177,19 +177,19 @@ router.post(
  * @throws {404} - if `rrpictureId` cannot be found or is not associated with the user
  */
 router.delete(
-	'/previous/:rrpictureId?',
-	[
-		userValidator.isUserLoggedIn,
-		rrpicturevalidator.isUsersPicture,
-	],
-	async (req: Request, res: Response) => {
-		await RRPictureCollection.deleteOne(req.params.rrpictureId);
-		const rrpictures = await RRPictureCollection.findPreviousByUser(req.session.userId);
-		res.status(200).json({
-			message: 'Your previous profile picture was deleted successfully.',
-			rrpictures: rrpictures.map(util.constructRRPictureResponse),
-		});
-	},
+  '/previous/:rrpictureId?',
+  [
+    userValidator.isUserLoggedIn,
+    rrpicturevalidator.isUsersPicture,
+  ],
+  async (req: Request, res: Response) => {
+    await RRPictureCollection.deleteOne(req.params.rrpictureId);
+    const rrpictures = await RRPictureCollection.findPreviousByUser(req.session.userId);
+    res.status(200).json({
+      message: 'Your previous profile picture was deleted successfully.',
+      rrpictures: rrpictures.map(util.constructRRPictureResponse),
+    });
+  },
 );
 
 export {router as rrpictureRouter};

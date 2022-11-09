@@ -1,5 +1,5 @@
 <template>
-	<section v-if="freets.length">
+  <section v-if="freets.length">
     <FreetComponent v-for="freet in freets"
     :key="freet.id"
     :freet="freet"
@@ -24,8 +24,8 @@
     },
     data() {
       return {
-		    freets: [],
-      	alerts: {},
+        freets: [],
+        alerts: {},
       };
     },
     methods: {

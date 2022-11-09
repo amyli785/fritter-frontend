@@ -1,11 +1,11 @@
 <template>
-	<section class="followers-container">
+  <section class="followers-container">
     <UserComponent
       v-for="follower in followers"
       :key="follower.username"
       :username="follower.username"
     />
-	</section>
+  </section>
 </template>
 
 <script>

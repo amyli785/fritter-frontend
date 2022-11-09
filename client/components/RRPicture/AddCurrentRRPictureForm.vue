@@ -1,14 +1,14 @@
 <template>
-	<form class="form-container" @submit.prevent="submit">
-	  <h3 class="form-title">
-		  Add New Profile Picture
-	  </h3>
+  <form class="form-container" @submit.prevent="submit">
+    <h3 class="form-title">
+      Add New Profile Picture
+    </h3>
     <p class="form-content">
       Invalid links to images will not render correctly.
     </p>
-	  <article class="form-fields-container">
-		<div class="form-field-container">
-		  <label class="form-field-label" for="picture-type-select">type</label>
+    <article class="form-fields-container">
+    <div class="form-field-container">
+      <label class="form-field-label" for="picture-type-select">type</label>
       <select
         class="form-field-input"
         name="pictureType"
@@ -23,18 +23,18 @@
           {{pictureTypeOption.name}}
         </option>
       </select>
-		</div>
-		<div class="form-field-container">
-		  <label class="form-field-label" for="picture-input">picture ({{pictureType.name}})</label>
-		  <input
+    </div>
+    <div class="form-field-container">
+      <label class="form-field-label" for="picture-input">picture ({{pictureType.name}})</label>
+      <input
         class="form-field-input"
         name="picture"
         :value="picture"
         id="picture-input"
         @input="picture = $event.target.value"
-		  >
-		</div>
-		<div class="form-field-container" v-if="rrpictureCurrent">
+      >
+    </div>
+    <div class="form-field-container" v-if="rrpictureCurrent">
       <div class="form-field-checkbox-container">
         <input
           class="form-field-checkbox"
@@ -46,10 +46,10 @@
         >
         <label class="form-field-label" for="maintain-previous-input">maintain current picture in previous pictures</label>
       </div>
-		</div>
-	  </article>
-	  <button class="form-submit round-click" type="submit">Add</button>
-	</form>
+    </div>
+    </article>
+    <button class="form-submit round-click" type="submit">Add</button>
+  </form>
 </template>
   
 <script>
@@ -58,51 +58,51 @@
   const pictureTypeLink = {name: 'link', value: 'Link'}
 
   export default {
-	name: 'AddCurrentRRPictureForm',
-	props: {
-		rrpictureCurrent: {
+  name: 'AddCurrentRRPictureForm',
+  props: {
+    rrpictureCurrent: {
       type: Object,
     },
-	},
-	data() {
-	  return {
+  },
+  data() {
+    return {
       picture: "",
       pictureType: pictureTypeRawString,
       pictureTypeOptions: [pictureTypeRawString, pictureTypeLink],
       maintainPrevious: false,
-	  };
-	},
-	methods: {
-	  async submit() {
-		const url = `/api/rrpictures/current`;
-		const body = {
-			picture: this.picture,
-			pictureType: this.pictureType.value,
-			maintainPrevious: this.maintainPrevious,
-		};
-		const options = {
-		  method: 'POST',
+    };
+  },
+  methods: {
+    async submit() {
+    const url = `/api/rrpictures/current`;
+    const body = {
+      picture: this.picture,
+      pictureType: this.pictureType.value,
+      maintainPrevious: this.maintainPrevious,
+    };
+    const options = {
+      method: 'POST',
       body: JSON.stringify(body),
-		  headers: {'Content-Type': 'application/json'},
-		};
+      headers: {'Content-Type': 'application/json'},
+    };
   
-		try {
-		  const r = await fetch(url, options);
-		  if (!r.ok) {
-			const res = await r.json();
-			throw new Error(res.error);
-		  }
-		  this.$emit('done');
-		} catch (e) {
-		  console.log(e);
-		  // TODO: deal with errors correctly
-		}
+    try {
+      const r = await fetch(url, options);
+      if (!r.ok) {
+      const res = await r.json();
+      throw new Error(res.error);
+      }
+      this.$emit('done');
+    } catch (e) {
+      console.log(e);
+      // TODO: deal with errors correctly
+    }
   
-		this.picture="";
+    this.picture="";
     this.pictureType="";
     this.maintainPrevious="";
-	  },
-	},
+    },
+  },
   };
   </script>
   
@@ -128,7 +128,7 @@
   }
   
   .round-click, .round-click:link, .round-click:hover, .round-click:visited {
-	background-color: #B2DBE6;
-	border-color: #B2DBE6;
+  background-color: #B2DBE6;
+  border-color: #B2DBE6;
   }
   </style>

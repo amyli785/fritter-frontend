@@ -23,20 +23,20 @@ const router = express.Router();
  * @throws {403} if the user is not logged in
  */
 router.get(
-	'/',
-	[
-		userValidator.isUserLoggedIn,
-	],
-	async (req: Request, res: Response) => {
-		const freets = await FreetCollection.findAll();
-		const freetIdsViewable = await feedValidator.FindViewableFreets(
-			freets.map((freet) => freet._id.toString()),
-			req.session.userId
-		);
-		const freetsViewable = await FreetCollection.findAllByIds(freetIdsViewable);
-		const response = freetsViewable.map(freetUtil.constructFreetResponse);
-		res.status(200).json(response);
-	},
+  '/',
+  [
+    userValidator.isUserLoggedIn,
+  ],
+  async (req: Request, res: Response) => {
+    const freets = await FreetCollection.findAll();
+    const freetIdsViewable = await feedValidator.FindViewableFreets(
+      freets.map((freet) => freet._id.toString()),
+      req.session.userId
+    );
+    const freetsViewable = await FreetCollection.findAllByIds(freetIdsViewable);
+    const response = freetsViewable.map(freetUtil.constructFreetResponse);
+    res.status(200).json(response);
+  },
 );
 
 /**
@@ -58,49 +58,49 @@ router.get(
  * @throws {404} - if `filterId` cannot be found or is not associated with the user
  */
  router.get(
-	'/:filterId',
-	[
-		userValidator.isUserLoggedIn,
-	],
-	async (req: Request, res: Response, next: NextFunction) => {
-		if (req.params.filterId !== 'following') {
-			next();
-			return;
-		}
+  '/:filterId',
+  [
+    userValidator.isUserLoggedIn,
+  ],
+  async (req: Request, res: Response, next: NextFunction) => {
+    if (req.params.filterId !== 'following') {
+      next();
+      return;
+    }
 
-		const followees = await FollowCollection.findAllFollowees(req.session.userId);
-		if (followees.length === 0) {
-			res.status(200).json([]);
-			return;
-		}
+    const followees = await FollowCollection.findAllFollowees(req.session.userId);
+    if (followees.length === 0) {
+      res.status(200).json([]);
+      return;
+    }
 
-		const authorExprs: Array<BooleanExpression> = followees.map((follow) => {
+    const authorExprs: Array<BooleanExpression> = followees.map((follow) => {
       const followCopy: PopulatedFollow = {
         ...follow.toObject({versionKey: false})
       };
       return new AuthorExpression(followCopy.followeeId.username);
     });
 
-		const booleanExpr = authorExprs.reduce((sofar, authorExpr) => new OrExpression(sofar, authorExpr));
-		const freetIds = await booleanExpr.freetIds();
-		const freetIdsViewable = await feedValidator.FindViewableFreets(freetIds, req.session.userId);
-		const freetsViewable = await FreetCollection.findAllByIds(freetIdsViewable);
-		const response = freetsViewable.map(freetUtil.constructFreetResponse);
-		res.status(200).json(response);
-	},
-	[
-		filterValidator.isFilterExistsAndOwned,
-	],
-	async (req: Request, res: Response) => {
-		const filter = await FilterCollection.findOne(req.params.filterId);
-		const expression = filter.expression;
-		const booleanExpr = parse(expression);
-		const freetIds = await booleanExpr.freetIds();
-		const freetIdsViewable = await feedValidator.FindViewableFreets(freetIds, req.session.userId);
-		const freetsViewable = await FreetCollection.findAllByIds(freetIdsViewable);
-		const response = freetsViewable.map(freetUtil.constructFreetResponse);
-		res.status(200).json(response);
-	},
+    const booleanExpr = authorExprs.reduce((sofar, authorExpr) => new OrExpression(sofar, authorExpr));
+    const freetIds = await booleanExpr.freetIds();
+    const freetIdsViewable = await feedValidator.FindViewableFreets(freetIds, req.session.userId);
+    const freetsViewable = await FreetCollection.findAllByIds(freetIdsViewable);
+    const response = freetsViewable.map(freetUtil.constructFreetResponse);
+    res.status(200).json(response);
+  },
+  [
+    filterValidator.isFilterExistsAndOwned,
+  ],
+  async (req: Request, res: Response) => {
+    const filter = await FilterCollection.findOne(req.params.filterId);
+    const expression = filter.expression;
+    const booleanExpr = parse(expression);
+    const freetIds = await booleanExpr.freetIds();
+    const freetIdsViewable = await feedValidator.FindViewableFreets(freetIds, req.session.userId);
+    const freetsViewable = await FreetCollection.findAllByIds(freetIdsViewable);
+    const response = freetsViewable.map(freetUtil.constructFreetResponse);
+    res.status(200).json(response);
+  },
 );
 
 /**
@@ -113,19 +113,19 @@ router.get(
  * @throws {404} - if `username` cannot be found
  */
  router.get(
-	'/author/:username',
-	[
-		userValidator.isUserLoggedIn,
+  '/author/:username',
+  [
+    userValidator.isUserLoggedIn,
     userValidator.isUsernameExists,
-	],
-	async (req: Request, res: Response, next: NextFunction) => {
-		const booleanExpr = new AuthorExpression(req.params.username);
-		const freetIds = await booleanExpr.freetIds();
-		const freetIdsViewable = await feedValidator.FindViewableFreets(freetIds, req.session.userId);
-		const freetsViewable = await FreetCollection.findAllByIds(freetIdsViewable);
-		const response = freetsViewable.map(freetUtil.constructFreetResponse);
-		res.status(200).json(response);
-	},
+  ],
+  async (req: Request, res: Response, next: NextFunction) => {
+    const booleanExpr = new AuthorExpression(req.params.username);
+    const freetIds = await booleanExpr.freetIds();
+    const freetIdsViewable = await feedValidator.FindViewableFreets(freetIds, req.session.userId);
+    const freetsViewable = await FreetCollection.findAllByIds(freetIdsViewable);
+    const response = freetsViewable.map(freetUtil.constructFreetResponse);
+    res.status(200).json(response);
+  },
 );
 
 export {router as feedRouter};

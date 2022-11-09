@@ -1,20 +1,20 @@
 <!-- Default page that also displays freets -->
 
 <template>
-	<main>
-	  <section v-if="$store.state.username">
-		<header>
-		  <h2>Welcome @{{ $store.state.username }}</h2>
-		</header>
+  <main>
+    <section v-if="$store.state.username">
+    <header>
+      <h2>Welcome @{{ $store.state.username }}</h2>
+    </header>
     <FeedFreets />
-	  </section>
-	  <section v-else>
-		<header>
-		  <h2>Welcome to Fritter!</h2>
-		</header>
-		<NotLoggedIn />
-	  </section>
-	</main>
+    </section>
+    <section v-else>
+    <header>
+      <h2>Welcome to Fritter!</h2>
+    </header>
+    <NotLoggedIn />
+    </section>
+  </main>
 </template>
   
 <script>
@@ -29,8 +29,8 @@
   
 <style scoped>
   section {
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
   }
 </style>
   

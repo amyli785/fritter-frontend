@@ -1,5 +1,5 @@
 <template>
-	<div class="update-groups-container">
+  <div class="update-groups-container">
     <section class="update-groups-bar">
       <button
         v-for="group in groups"
@@ -112,10 +112,10 @@ export default {
   .update-groups-bar {
     width: 100%;
 
-	  display: flex;
+    display: flex;
     flex-direction: row;
-	  justify-content: flex-start;
-	  align-items: center;
+    justify-content: flex-start;
+    align-items: center;
     gap: 1vmax;
   }
 

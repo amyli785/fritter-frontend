@@ -17,15 +17,15 @@ const router = express.Router();
  * @throws {403} - if the user is not logged in
  */
 router.get(
-	'/followers',
-	[
-		userValidator.isUserLoggedIn,
-	],
-	async (req: Request, res: Response) => {
-		const allFollowers = await FollowCollection.findAllFollowers(req.session.userId as string);
-		const response = allFollowers.map(util.constructFollower);
-		res.status(200).json(response);
-	}
+  '/followers',
+  [
+    userValidator.isUserLoggedIn,
+  ],
+  async (req: Request, res: Response) => {
+    const allFollowers = await FollowCollection.findAllFollowers(req.session.userId as string);
+    const response = allFollowers.map(util.constructFollower);
+    res.status(200).json(response);
+  }
 )
 
 /**
@@ -37,15 +37,15 @@ router.get(
  * @throws {403} - if the user is not logged in
  */
  router.get(
-	'/following',
-	[
-		userValidator.isUserLoggedIn,
-	],
-	async (req: Request, res: Response) => {
-		const allFollowees = await FollowCollection.findAllFollowees(req.session.userId as string);
-		const response = allFollowees.map(util.constructFollowee);
-		res.status(200).json(response);
-	}
+  '/following',
+  [
+    userValidator.isUserLoggedIn,
+  ],
+  async (req: Request, res: Response) => {
+    const allFollowees = await FollowCollection.findAllFollowees(req.session.userId as string);
+    const response = allFollowees.map(util.constructFollowee);
+    res.status(200).json(response);
+  }
 )
 
 /**
@@ -61,22 +61,22 @@ router.get(
  * @throws {409} - if the user is already following `followee` or the user is `followee`
  */
 router.post(
-	'/',
-	[
-		userValidator.isUserLoggedIn,
-		followValidator.isFolloweeExistsBody,
-		followValidator.isFolloweeFollowable,
-	],
-	async (req: Request, res: Response) => {
-		const followee = await UserCollection.findOneByUsername(req.body.followee as string);
-		const follow = await FollowCollection.addOne(req.session.userId, followee._id);
-		const followees = await FollowCollection.findAllFollowees(req.session.userId);
+  '/',
+  [
+    userValidator.isUserLoggedIn,
+    followValidator.isFolloweeExistsBody,
+    followValidator.isFolloweeFollowable,
+  ],
+  async (req: Request, res: Response) => {
+    const followee = await UserCollection.findOneByUsername(req.body.followee as string);
+    const follow = await FollowCollection.addOne(req.session.userId, followee._id);
+    const followees = await FollowCollection.findAllFollowees(req.session.userId);
 
-		res.status(201).json({
-		  message: 'Your follow was created successfully.',
-		  followees: followees.map(util.constructFollowee),
-		});
-	}
+    res.status(201).json({
+      message: 'Your follow was created successfully.',
+      followees: followees.map(util.constructFollowee),
+    });
+  }
 )
 
 /**
@@ -90,21 +90,21 @@ router.post(
  * @throws {409} - if the user was not following `followee` or the user is `followee`
  */
 router.delete(
-	'/:followee?',
-	[
-		userValidator.isUserLoggedIn,
-		followValidator.isFolloweeExistsParams,
-		followValidator.isFolloweeUnfollowable,
-	],
-	async (req: Request, res: Response) => {
-		const followee = await UserCollection.findOneByUsername(req.params.followee as string);
-		await FollowCollection.deleteOne(req.session.userId, followee._id);
-		const followees = await FollowCollection.findAllFollowees(req.session.userId);
-		res.status(200).json({
-		  message: 'Your follow was deleted successfully.',
-		  followees: followees.map(util.constructFollowee),
-		});
-	}
+  '/:followee?',
+  [
+    userValidator.isUserLoggedIn,
+    followValidator.isFolloweeExistsParams,
+    followValidator.isFolloweeUnfollowable,
+  ],
+  async (req: Request, res: Response) => {
+    const followee = await UserCollection.findOneByUsername(req.params.followee as string);
+    await FollowCollection.deleteOne(req.session.userId, followee._id);
+    const followees = await FollowCollection.findAllFollowees(req.session.userId);
+    res.status(200).json({
+      message: 'Your follow was deleted successfully.',
+      followees: followees.map(util.constructFollowee),
+    });
+  }
 )
 
 export {router as followRouter};

@@ -90,19 +90,19 @@ nav {
 .left {
   padding: none;
   margin: 0;
-	display: flex;
+  display: flex;
   flex-direction: row;
   justify-content: flex-start;
-	align-items: center;
+  align-items: center;
 }
 
 .right {
   padding: none;
   margin: 0;
-	display: flex;
+  display: flex;
   flex-direction: row;
   justify-content: flex-end;
-	align-items: center;
+  align-items: center;
   gap: 1vmax;
 }
 

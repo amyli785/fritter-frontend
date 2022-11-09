@@ -1,5 +1,5 @@
 <template>
-	<button v-if="!isFollowing" @click="follow">
+  <button v-if="!isFollowing" @click="follow">
     Follow
   </button>
   <button v-else @click="unfollow">

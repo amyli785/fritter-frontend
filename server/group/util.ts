@@ -4,10 +4,10 @@ import * as groupMemberUtil from '../groupMember/util';
 import { GroupMember } from "../groupMember/model";
 
 type GroupResponse = {
-	_id: string;
-	userId: string;
-	username: string;
-	name: string;
+  _id: string;
+  userId: string;
+  username: string;
+  name: string;
 };
 
 /**
@@ -18,25 +18,25 @@ type GroupResponse = {
  * @returns {GroupResponse} - the group object formatted for the frontend
  */
 const constructGroupResponse = (group: HydratedDocument<Group>): GroupResponse => {
-	const groupCopy: PopulatedGroup = {
-		...group.toObject({
-			versionKey: false
-		})
-	};
-	return {
-		_id: groupCopy._id.toString(),
-		userId: groupCopy.userId._id.toString(),
-		username: groupCopy.userId.username,
-		name: groupCopy.name,
-	};
+  const groupCopy: PopulatedGroup = {
+    ...group.toObject({
+      versionKey: false
+    })
+  };
+  return {
+    _id: groupCopy._id.toString(),
+    userId: groupCopy.userId._id.toString(),
+    username: groupCopy.userId.username,
+    name: groupCopy.name,
+  };
 }
 
 type GroupWithMembersResponse = {
-	_id: string;
-	userId: string;
-	username: string;
-	name: string;
-	members: groupMemberUtil.GroupMemberOnlyResponse[];
+  _id: string;
+  userId: string;
+  username: string;
+  name: string;
+  members: groupMemberUtil.GroupMemberOnlyResponse[];
 };
 
 /**
@@ -48,21 +48,21 @@ type GroupWithMembersResponse = {
  * @returns {GroupWithMembersResponse} - the group object with members formatted for the frontend
  */
 const constructGroupWithMembersResponse = (group: HydratedDocument<Group>, groupMembers: Array<HydratedDocument<GroupMember>>): GroupWithMembersResponse => {
-	const groupCopy: PopulatedGroup = {
-		...group.toObject({
-			versionKey: false
-		})
-	};
-	return {
-		_id: groupCopy._id.toString(),
-		userId: groupCopy.userId._id.toString(),
-		username: groupCopy.userId.username,
-		name: groupCopy.name,
-		members: groupMembers.map(groupMemberUtil.constructGroupMemberOnlyResponse),
-	};
+  const groupCopy: PopulatedGroup = {
+    ...group.toObject({
+      versionKey: false
+    })
+  };
+  return {
+    _id: groupCopy._id.toString(),
+    userId: groupCopy.userId._id.toString(),
+    username: groupCopy.userId.username,
+    name: groupCopy.name,
+    members: groupMembers.map(groupMemberUtil.constructGroupMemberOnlyResponse),
+  };
 }
 
 export {
-	constructGroupResponse,
-	constructGroupWithMembersResponse,
+  constructGroupResponse,
+  constructGroupWithMembersResponse,
 };

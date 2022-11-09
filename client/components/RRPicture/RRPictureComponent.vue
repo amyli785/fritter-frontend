@@ -1,5 +1,5 @@
 <template>
-	<article class="rrpicture-container">
+  <article class="rrpicture-container">
     <div v-if="!rrpicture">
       None
     </div>

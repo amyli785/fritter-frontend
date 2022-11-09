@@ -1,5 +1,5 @@
 <template>
-	<main>
+  <main>
     <div v-if="userId" class="user-page-container">
       <section class="account-header-container">
         <div class="account-picture-container">

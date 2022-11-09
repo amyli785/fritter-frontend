@@ -2,11 +2,11 @@ import type { HydratedDocument } from "mongoose";
 import type { GroupMember, PopulatedGroupMember } from "./model";
 
 type GroupMemberResponse = {
-	_id: string;
-	groupId: string;
-	groupName: string;
-	memberId: string;
-	memberUsername: string;
+  _id: string;
+  groupId: string;
+  groupName: string;
+  memberId: string;
+  memberUsername: string;
 }
 
 /**
@@ -17,23 +17,23 @@ type GroupMemberResponse = {
  * @returns {GroupMemberResponse} - the group member object formatted for the frontend
  */
  const constructGroupMemberResponse = (groupMember: HydratedDocument<GroupMember>): GroupMemberResponse => {
-	const groupMemberCopy: PopulatedGroupMember = {
-		...groupMember.toObject({
-			versionKey: false
-		})
-	};
-	return {
-		_id: groupMemberCopy._id.toString(),
-		groupId: groupMemberCopy.groupId._id.toString(),
-		groupName: groupMemberCopy.groupId.name,
-		memberId: groupMemberCopy.memberId._id.toString(),
-		memberUsername: groupMemberCopy.memberId.username,
-	};
+  const groupMemberCopy: PopulatedGroupMember = {
+    ...groupMember.toObject({
+      versionKey: false
+    })
+  };
+  return {
+    _id: groupMemberCopy._id.toString(),
+    groupId: groupMemberCopy.groupId._id.toString(),
+    groupName: groupMemberCopy.groupId.name,
+    memberId: groupMemberCopy.memberId._id.toString(),
+    memberUsername: groupMemberCopy.memberId.username,
+  };
 }
 
 export type GroupMemberOnlyResponse = {
-	memberId: string;
-	memberUsername: string;
+  memberId: string;
+  memberUsername: string;
 }
 
 /**
@@ -44,19 +44,19 @@ export type GroupMemberOnlyResponse = {
  * @returns {GroupMemberOnlyResponse} - the user member of the group member object formatted for the frontend
  */
  const constructGroupMemberOnlyResponse = (groupMember: HydratedDocument<GroupMember>): GroupMemberOnlyResponse => {
-	const groupMemberCopy: PopulatedGroupMember = {
-		...groupMember.toObject({
-			versionKey: false
-		})
-	};
-	return {
-		memberId: groupMemberCopy.memberId._id.toString(),
-		memberUsername: groupMemberCopy.memberId.username,
-	};
+  const groupMemberCopy: PopulatedGroupMember = {
+    ...groupMember.toObject({
+      versionKey: false
+    })
+  };
+  return {
+    memberId: groupMemberCopy.memberId._id.toString(),
+    memberUsername: groupMemberCopy.memberId.username,
+  };
 }
 
 export {
-	constructGroupMemberResponse,
-	constructGroupMemberOnlyResponse,
+  constructGroupMemberResponse,
+  constructGroupMemberOnlyResponse,
 };
 

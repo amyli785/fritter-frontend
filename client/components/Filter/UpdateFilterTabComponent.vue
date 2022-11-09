@@ -1,5 +1,5 @@
 <template>
-	<div class="update-filter-tab-container">
+  <div class="update-filter-tab-container">
     <section class="update-filter-tab-bar">
       <button
         v-for="filter in filters"
@@ -88,10 +88,10 @@ export default {
   .update-filter-tab-bar {
     width: 100%;
 
-	  display: flex;
+    display: flex;
     flex-direction: row;
-	  justify-content: flex-start;
-	  align-items: center;
+    justify-content: flex-start;
+    align-items: center;
     gap: 1vmax;
   }
 

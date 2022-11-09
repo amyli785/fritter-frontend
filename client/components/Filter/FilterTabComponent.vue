@@ -9,26 +9,26 @@
   
 <script>
   export default {
-	name: 'FilterTabComponent',
-	props: {
-	  // Data from the stored filter
-	  filter: {
-		type: Object,
-		required: true
-	  }
-	},
-	data() {
-	  return {
-		alerts: {},
-	  };
-	},
-	methods: {
-	  onClick() {
+  name: 'FilterTabComponent',
+  props: {
+    // Data from the stored filter
+    filter: {
+    type: Object,
+    required: true
+    }
+  },
+  data() {
+    return {
+    alerts: {},
+    };
+  },
+  methods: {
+    onClick() {
       this.$store.commit('updateCurrentFilter', this.filter);
       this.$store.commit('refreshFreets');
-	  },
-	},
-	mounted() {
-	},
+    },
+  },
+  mounted() {
+  },
   };
 </script>

@@ -8,7 +8,7 @@ export interface BooleanExpression {
     // Data type definition
     //    BooleanExpression = AuthorExpression(username:string)
     //                        + TagExpression(label:string)
-	//                        + NotExpression(sub:BooleanExpression)
+  //                        + NotExpression(sub:BooleanExpression)
     //                        + AndExpression(left:BooleanExpression, right:BooleanExpression)
     //                        + OrExpression(left:BooleanExpression, right:BooleanExpression)
 

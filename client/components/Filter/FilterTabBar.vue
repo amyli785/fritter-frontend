@@ -87,10 +87,10 @@
 
 <style scoped>
   .filter-tab-bar {
-	  display: flex;
+    display: flex;
     flex-direction: row;
-	  justify-content: space-between;
-	  align-items: center;
+    justify-content: space-between;
+    align-items: center;
     gap: 1vmax;
   }
 
@@ -99,7 +99,7 @@
   }
 
   .alerts {
-	  width: 25%;
+    width: 25%;
   }
 </style>
   

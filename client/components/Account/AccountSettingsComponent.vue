@@ -1,5 +1,5 @@
 <template>
-	<section class="account-settings-container">
+  <section class="account-settings-container">
     <LogoutForm class="account-settings-logout" @done="home" />
     <ChangeUsernameForm class="account-settings-form" @done="close" />
     <ChangePasswordForm class="account-settings-form" @done="close" />

@@ -4,12 +4,12 @@ import type {RRPicture, PopulatedRRPicture} from './model';
 import {RRPictureType, RRPictureStatus} from './model';
 
 type RRPictureResponse = {
-	_id: string;
-	userId: string;
-	username: string;
-	picture: string;
-	pictureType: string;
-	status: string;
+  _id: string;
+  userId: string;
+  username: string;
+  picture: string;
+  pictureType: string;
+  status: string;
 }
 
 /**
@@ -20,22 +20,22 @@ type RRPictureResponse = {
  * @returns {RRPictureResponse} - The rrpicture object formatted for the frontend
  */
 const constructRRPictureResponse = (rrpicture: HydratedDocument<RRPicture>): RRPictureResponse => {
-	const rrpictureCopy: PopulatedRRPicture = {
-		...rrpicture.toObject({
-			versionKey: false
-		})
-	};
+  const rrpictureCopy: PopulatedRRPicture = {
+    ...rrpicture.toObject({
+      versionKey: false
+    })
+  };
 
-	return {
-		_id: rrpictureCopy._id.toString(),
-		userId: rrpictureCopy.userId._id.toString(),
-		username: rrpictureCopy.userId.username,
-		picture: rrpictureCopy.picture,
-		pictureType: rrpictureCopy.pictureType,
-		status: rrpictureCopy.status,
-	};
+  return {
+    _id: rrpictureCopy._id.toString(),
+    userId: rrpictureCopy.userId._id.toString(),
+    username: rrpictureCopy.userId.username,
+    picture: rrpictureCopy.picture,
+    pictureType: rrpictureCopy.pictureType,
+    status: rrpictureCopy.status,
+  };
 };
 
 export {
-	constructRRPictureResponse,
+  constructRRPictureResponse,
 }

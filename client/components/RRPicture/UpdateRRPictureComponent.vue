@@ -1,6 +1,6 @@
 <template>
-	<div class="update-rrpicture-container">
-		<section class="update-rrpicture-bar">
+  <div class="update-rrpicture-container">
+    <section class="update-rrpicture-bar">
       <button 
         :class="'update-rrpicture-bar-button round-click ' + (showCurrent ? 'round-click-selected' : 'round-click-unselected')"
         @click="showCurrent = true"
@@ -13,7 +13,7 @@
       >
         Previous Pictures
       </button>
-		</section>
+    </section>
     <section
       v-if="showCurrent"
       class="update-rrpicture-content-container"
@@ -39,7 +39,7 @@
     >
       previous pictures editor
     </section>
-	</div>
+  </div>
 </template>
 
 <script>

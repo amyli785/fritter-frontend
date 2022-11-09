@@ -3,11 +3,11 @@ import moment from 'moment';
 import type {Follow, PopulatedFollow} from '../follow/model';
 
 type FollowResponse = {
-	_id: string;
+  _id: string;
   followerId: string;
   followeeId: string;
-	follower: string;
-	followee: string;
+  follower: string;
+  followee: string;
 };
 
 /**
@@ -28,12 +28,12 @@ type FollowResponse = {
     followerId: followCopy.followerId._id.toString(),
     followeeId: followCopy.followeeId._id.toString(),
     follower: followCopy.followerId.username,
-		followee: followCopy.followeeId.username,
+    followee: followCopy.followeeId.username,
   };
 };
 
 type FollowUserResponse = {
-	userId: string;
+  userId: string;
   username: string;
 };
 
