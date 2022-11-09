@@ -20,6 +20,11 @@ async function FreetIdExistsViewableForUserId (freetId: Types.ObjectId | string,
     return true;
   }
 
+  // an empty audience list represents a public freet
+  if (freet.audience.length===0) {
+    return true;
+  }
+
   const groupOwners = await Promise.all(
     freet.audience.map(async (groupId) => 
       GroupCollection.findOne(groupId))

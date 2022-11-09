@@ -20,7 +20,12 @@
           name="audience"
           id="audience-select"
         >
-          <option disabled selected value>select a group to post to</option>
+          <option
+            selected
+            @click="audience = ''"
+          >
+            Public
+          </option>
           <option
             v-for="group in $store.state.groups"
             :key="group._id"

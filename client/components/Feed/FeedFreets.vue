@@ -11,7 +11,7 @@
   </section>
   <article v-else>
     <h3 class="feed-no-freets">
-      no freets found with filter {{$store.state.currentFilter.name}}
+      no freets found when filtering by <strong>{{$store.state.currentFilter.name}}</strong>
     </h3>
   </article>
 </template>

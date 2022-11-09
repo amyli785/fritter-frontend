@@ -10,7 +10,7 @@
   </section>
   <article v-else>
     <h3 class="feed-no-freets">
-      no freets found by @{{username}}
+      no freets found by <strong>@{{username}}</strong>
     </h3>
   </article>
 </template>
