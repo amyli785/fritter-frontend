@@ -4,19 +4,23 @@
 <template>
   <article class="freet-container">
     <section class="freet-header-container">
-      <UserComponent
-        class="freet-author"
-        :username="freet.author"
-      />
-      <p class="freet-date">
-        {{ freet.dateModified }}
-      </p>
-      <button
-        class="round-click"
-        @click="showRespondTo = true"
-      >
-        + Respond
-      </button>
+      <div class="freet-header-left">
+        <UserComponent
+          class="freet-author"
+          :username="freet.author"
+        />
+        <p class="freet-date">
+          {{ freet.dateModified }}
+        </p>
+      </div>
+      <div class="freet-header-right">
+        <button
+          class="round-click freet-respond-to"
+          @click="showRespondTo = true"
+        >
+          + Respond
+        </button>
+      </div>
     </section>
     <p class="freet-content" >
       {{ freet.content }}
@@ -77,7 +81,22 @@ export default {
 .freet-header-container {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.freet-header-left {
+  display: flex;
+  flex-direction: row;
   justify-content: flex-start;
+  align-items: center;
+  gap: 1vmax;
+}
+
+.freet-header-right {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
   align-items: center;
   gap: 1vmax;
 }
@@ -98,6 +117,12 @@ export default {
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+}
+
+.freet-respond-to {
+  border-color: #000;
+  background-color: #3c9eb9;
+  color: #fff;
 }
 
 .freet-audience {

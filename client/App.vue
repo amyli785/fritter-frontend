@@ -113,6 +113,25 @@ main {
   cursor: pointer;
 }
 
+.feed-container {
+  width: 100%;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 1vmax;
+}
+
+.feed-no-freets {
+  margin: 0;
+  padding: 0;
+  color: #000;
+  background-color: rgba(0, 0, 0, 0);
+  text-decoration: none;
+  font-weight: normal;
+}
+
 .form-container {
   width: 100%;
   

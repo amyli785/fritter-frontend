@@ -1,12 +1,17 @@
 <template>
-  <section v-if="freets.length">
+  <section
+    v-if="freets.length"
+    class="feed-container"
+  >
     <FreetComponent v-for="freet in freets"
     :key="freet.id"
     :freet="freet"
     />
   </section>
   <article v-else>
-    <h3>No freets found.</h3>
+    <h3 class="feed-no-freets">
+      no freets found by @{{username}}
+    </h3>
   </article>
 </template>
 

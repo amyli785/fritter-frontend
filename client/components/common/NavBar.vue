@@ -111,7 +111,9 @@ nav {
 }
 
 .nav-new-freet {
-  border-color: #b2dbe6;
+  border-color: #fff;
+  background-color: #b2dbe6;
+  color: #000;
 }
 
 </style>

@@ -1,6 +1,7 @@
 <template>
   <section
     v-if="$store.state.freets.length"
+    class="feed-container"
   >
     <FreetComponent
     v-for="freet in $store.state.freets"
@@ -8,10 +9,10 @@
     :freet="freet"
     />
   </section>
-  <article
-    v-else
-  >
-    <h3>No freets found.</h3>
+  <article v-else>
+    <h3 class="feed-no-freets">
+      no freets found with filter {{$store.state.currentFilter.name}}
+    </h3>
   </article>
 </template>
 
