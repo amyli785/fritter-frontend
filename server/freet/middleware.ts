@@ -19,6 +19,15 @@ async function FreetIdExistsViewableForUserId (freetId: Types.ObjectId | string,
   if (freet.authorId._id.toString() === userId as string) {
     return true;
   }
+
+  const groupOwners = await Promise.all(
+    freet.audience.map(async (groupId) => 
+      GroupCollection.findOne(groupId))
+  );
+  if (groupOwners.some(group => group.userId._id.toString() === userId)) {
+    return true;
+  }
+
   const groupMembers = await Promise.all(
     freet.audience.map(async (groupId) => 
       GroupMemberCollection.findOne(groupId, userId))
@@ -81,9 +90,11 @@ const isValidFreetAudience = async (req: Request, res: Response, next: NextFunct
     return;
   }
 
+  const responseTo = req.body.responseTo;
+
   const groupIds = req.body.audience.toString().split(',');
   const validGroupIds = groupIds.every((groupId: string) => Types.ObjectId.isValid(groupId));
-  if (!validGroupIds) {
+  if (!responseTo && !validGroupIds) {
     res.status(400).json({
       error: 'Provided audience must be list of groupId strings.',
     });
@@ -92,7 +103,7 @@ const isValidFreetAudience = async (req: Request, res: Response, next: NextFunct
 
   const groups = await Promise.all(groupIds.map((groupId: string) => GroupCollection.findOne(groupId)));
   const validGroups = groups.every((group) => group && group.userId._id.toString() === req.session.userId as string);
-  if (!validGroups) {
+  if (!responseTo && !validGroups) {
     res.status(404).json({
       error: 'Provided audience must consist of existing groups viewing the user.'
     });

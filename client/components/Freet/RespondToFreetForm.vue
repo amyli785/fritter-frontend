@@ -13,24 +13,6 @@
         >
         </textarea>
       </div>
-      <div class="form-field-container">
-        <label class="form-field-label" for="audience-select">audience</label>
-        <select
-          class="form-field-input"
-          name="audience"
-          id="audience-select"
-        >
-          <option disabled selected value>select a group to post to</option>
-          <option
-            v-for="group in this.groups"
-            :key="group._id"
-            :value="group._id"
-            @click="audience = $event.target.value"
-          >
-            {{group.name}}
-          </option>
-        </select>
-      </div>
     </article>
     <button class="form-submit round-click" type="submit">Post</button>
   </form>
@@ -38,36 +20,27 @@
 
 <script>
 export default {
-  name: 'CreateFreetForm',
+  name: 'RespondToFreetForm',
+  props: {
+    freet: {
+      Type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       content: "",
-      audience: "",
+      audience: this.freet.audience,
       groups: {},
     }
   },
   methods: {
-    async getGroups() {
-      const url = '/api/groups';
-      try {
-        const r = await fetch(url);
-        if (!r.ok) {
-          const res = await r.json();
-          throw new Error(res.error);
-        }
-        const res = await r.json();
-        this.groups = res;
-      } catch(e) {
-        console.log(e);
-        // TODO: deal with errors correctly
-      }
-    },
     async submit() {
       const url = '/api/freets';
       const httpBody = {
         content: this.content,
         audience: this.audience,
-        responseTo: '',
+        responseTo: this.freet._id,
       };
       const options = {
         method: 'POST',
@@ -88,9 +61,6 @@ export default {
         // TODO: deal with errors correctly
       }
     },
-  },
-  mounted() {
-    this.getGroups();
   },
 };
 </script>

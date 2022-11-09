@@ -11,19 +11,41 @@
       <p class="freet-date">
         {{ freet.dateModified }}
       </p>
+      <button
+        class="round-click"
+        @click="showRespondTo = true"
+      >
+        + Respond
+      </button>
     </section>
     <p class="freet-content" >
       {{ freet.content }}
     </p>
+    <Modal
+      v-if="showRespondTo"
+      title="Respond"
+      @close="showRespondTo = false"
+    >
+      <RespondToFreetForm
+        :freet="freet"
+        @done="showRespondTo = false"
+      />
+    </Modal>
   </article>
 </template>
 
 <script>
-import UserComponent from '../User/UserComponent.vue'
+import Modal from '../common/Modal.vue';
+import UserComponent from '../User/UserComponent.vue';
+import RespondToFreetForm from '../Freet/RespondToFreetForm.vue';
 
 export default {
   name: 'FreetComponent',
-  components: {UserComponent},
+  components: {
+    Modal,
+    UserComponent,
+    RespondToFreetForm,
+  },
   props: {
     // Data from the stored freet
     freet: {
@@ -33,8 +55,7 @@ export default {
   },
   data() {
     return {
-      editing: false, // Whether or not this freet is in edit mode
-      draft: this.freet.content, // Potentially-new content for this freet
+      showRespondTo: false,
     };
   },
 };
@@ -57,7 +78,7 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  align-items: stretch;
+  align-items: center;
   gap: 1vmax;
 }
 
@@ -67,6 +88,7 @@ export default {
 }
 
 .freet-date {
+  align-self: stretch;
   margin: 0;
   padding: 1vmax;
 
