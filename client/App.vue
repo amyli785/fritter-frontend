@@ -88,6 +88,7 @@ main {
 
   border: 2pt solid #fff;
 
+  white-space: nowrap;
   color: #000;
   text-decoration: none;
   font-size: medium;
@@ -130,6 +131,12 @@ main {
   margin: 0;
   padding: 0;
   white-space: nowrap;
+}
+
+.form-content {
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .form-fields-container {

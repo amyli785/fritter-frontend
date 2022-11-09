@@ -56,6 +56,8 @@ export default {
 
 .modal-container {
   width: 50%;
+  max-height: 100%;
+  overflow: auto;
   padding: 1vw;
   background-color: #fff;
   transition: none 0s;

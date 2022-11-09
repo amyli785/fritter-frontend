@@ -3,7 +3,7 @@
 
 <template>
   <main>
-    <div v-if="username" class="account-page-container">
+    <div v-if="$store.state.username" class="account-page-container">
       <section class="account-header-container">
         <button class="invis-click"
           @click="showEditRRPicture = true"
@@ -84,22 +84,8 @@
       title="Account Settings"
       @close="showAccountSettings = false"
     >
-      Account settings component
+      <AccountSettingsComponent />
     </Modal>
-    <!-- <section>
-      <header>
-        <h2>Account settings for @{{ $store.state.username }}</h2>
-      </header>
-      <ChangeUsernameForm />
-      <ChangePasswordForm />
-    </section>
-    <section>
-      <header>
-        <h2>Account management</h2>
-      </header>
-      <LogoutForm />
-      <DeleteAccountForm />
-    </section> -->
   </main>
 </template>
 
@@ -107,11 +93,8 @@
 import NotLoggedIn from '../common/NotLoggedIn.vue';
 import Modal from '../common/Modal.vue';
 import RRPictureComponent from '../RRPicture/RRPictureComponent.vue';
-import ChangeUsernameForm from '@/components/Account/ChangeUsernameForm.vue';
-import ChangePasswordForm from '@/components/Account/ChangePasswordForm.vue';
-import DeleteAccountForm from '@/components/Account/DeleteAccountForm.vue';
-import LogoutForm from '@/components/Account/LogoutForm.vue';
 import UserFreets from '../User/UserFreets.vue';
+import AccountSettingsComponent from '../Account/AccountSettingsComponent.vue';
 
 export default {
   name: 'AccountPage',
@@ -119,11 +102,8 @@ export default {
     NotLoggedIn,
     Modal,
     RRPictureComponent,
-    ChangeUsernameForm,
-    ChangePasswordForm,
-    DeleteAccountForm,
-    LogoutForm,
     UserFreets,
+    AccountSettingsComponent,
   },
   data() {
     return {

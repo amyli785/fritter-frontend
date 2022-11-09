@@ -6,6 +6,9 @@
     <h3 v-if="title" class="form-title">
       {{title}}
     </h3>
+    <p v-if="content" class="form-content">
+      {{content}}
+    </p>
     <article
       v-if="fields.length"
       class="form-fields-container"
@@ -37,11 +40,15 @@ export default {
      * Options for submitting this form.
      */
     return {
+      title: '',
+      content: '',
+      submitText: '',
       url: '', // Url to submit form to
       method: 'GET', // Form request method
       hasBody: false, // Whether or not form request has a body
       setUsername: false, // Whether or not stored username should be updated after form submission
       refreshFreets: false, // Whether or not stored freets should be updated after form submission
+      refreshCustomFilters: false,
       callback: null // Function to run after successful form submission
     };
   },
@@ -99,51 +106,6 @@ export default {
 </script>
 
 <style scoped>
-/* .form-container {
-  width: 100%;
-  
-  margin: 0;
-  padding: 1vw;
-
-  background-color: #E8ECED;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 1vw;
-}
-
-.form-title {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  white-space: nowrap;
-}
-
-.form-fields-container {
-  width: 100%;
-
-  display: flex;
-  flex-direction: column;
-  gap: 0.4vw;
-}
-
-.form-field-container {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2vw;
-}
-
-.form-field-label {
-  font-size: medium;
-}
-
-.form-field-input {
-  font-size: medium;
-  padding: 0.4em;
-} */
-
 .round-click, .round-click:link, .round-click:hover, .round-click:visited {
   background-color: #B2DBE6;
   border-color: #B2DBE6;
