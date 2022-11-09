@@ -81,7 +81,7 @@ export default {
         }
 
         if (this.setUsername) {
-          const username = res ? res.user.username : null;
+          const username = res && res.user ? res.user.username : null;
           this.$store.commit('setUsername', res.user ? res.user.username : null);
         }
 

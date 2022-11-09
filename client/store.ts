@@ -18,6 +18,7 @@ const store = new Vuex.Store({
     currentFilter: filterAll,
     freets: [], // All freets created in the app
     username: null, // Username of the logged in user
+    userId: null,
     alerts: {}, // global success/error messages encountered during submissions to non-visible forms
   },
   mutations: {
@@ -30,12 +31,20 @@ const store = new Vuex.Store({
         Vue.delete(state.alerts, payload.message);
       }, 3000);
     },
-    setUsername(state, username) {
+    async setUsername(state, username) {
       /**
        * Update the stored username to the specified one.
        * @param username - new username to set
        */
       state.username = username;
+      
+      if (!state.username) {
+        state.userId = null;
+      } else {
+        const url = `/api/users/${state.username}`;
+        const res = await fetch(url).then(async r => r.json());
+        state.userId = res._id;
+      }
     },
     updateCurrentFilter(state, currentFilter) {
       /**

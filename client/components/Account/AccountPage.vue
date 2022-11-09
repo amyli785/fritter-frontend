@@ -9,11 +9,11 @@
           @click="showEditRRPicture = true"
         >
           <RRPictureComponent class="account-picture-container"
-            :username="username"
+            :username="$store.state.username"
           />
         </button>
-        <h3 class="account-handle">
-        @{{ username }}
+        <h3 class="account-handle" :key="$store.state.username">
+        @{{ $store.state.username }}
         </h3>
         <div class="account-button-row-container">
           <button
@@ -47,7 +47,8 @@
         </div>
       </section>
       <UserFreets
-        :username="username"
+        :key="$store.state.username"
+        :username="$store.state.username"
       />
     </div>
 		<NotLoggedIn v-else />
@@ -70,21 +71,21 @@
       title="Followers"
       @close="showFollowers = false"
     >
-      Followers list
+      <FollowersComponent />
     </Modal>
     <Modal
       v-if="showFollowing"
       title="Following"
       @close="showFollowing = false"
     >
-      Following list
+      <FollowingComponent />
     </Modal>
     <Modal
       v-if="showAccountSettings"
       title="Account Settings"
       @close="showAccountSettings = false"
     >
-      <AccountSettingsComponent />
+      <AccountSettingsComponent @close="showAccountSettings = false" @home="home"/>
     </Modal>
   </main>
 </template>
@@ -94,6 +95,8 @@ import NotLoggedIn from '../common/NotLoggedIn.vue';
 import Modal from '../common/Modal.vue';
 import RRPictureComponent from '../RRPicture/RRPictureComponent.vue';
 import UserFreets from '../User/UserFreets.vue';
+import FollowersComponent from '../Follow/FollowersComponent.vue';
+import FollowingComponent from '../Follow/FollowingComponent.vue';
 import AccountSettingsComponent from '../Account/AccountSettingsComponent.vue';
 
 export default {
@@ -103,11 +106,12 @@ export default {
     Modal,
     RRPictureComponent,
     UserFreets,
+    FollowersComponent,
+    FollowingComponent,
     AccountSettingsComponent,
   },
   data() {
     return {
-      username: this.$store.state.username,
       showEditRRPicture: false,
       showEditAudienceGroups: false,
       showFollowers: false,
@@ -115,6 +119,12 @@ export default {
       showAccountSettings: false,
     };
   },
+  methods: {
+    home() {
+      this.$router.push({name: 'Home'});
+      // this.$emit('close');
+    }
+  }
 };
 </script>
 

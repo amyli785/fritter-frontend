@@ -41,8 +41,8 @@ export default {
 
         this.rrpicture = res;
       } catch (e) {
-        this.$set(this.alerts, e, 'error');
-        setTimeout(() => this.$delete(this.alerts, e), 3000);
+        console.log(e);
+        // TODO: deal with errors correctly
       }
     },
   },

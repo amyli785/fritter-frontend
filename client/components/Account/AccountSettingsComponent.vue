@@ -1,9 +1,9 @@
 <template>
 	<section class="account-settings-container">
-    <LogoutForm class="account-settings-logout" />
-    <ChangeUsernameForm class="account-settings-form" />
-    <ChangePasswordForm class="account-settings-form" />
-    <DeleteAccountForm class="account-settings-delete" />
+    <LogoutForm class="account-settings-logout" @done="home" />
+    <ChangeUsernameForm class="account-settings-form" @done="close" />
+    <ChangePasswordForm class="account-settings-form" @done="close" />
+    <DeleteAccountForm class="account-settings-delete" @done="home" />
   </section>
 </template>
 
@@ -20,6 +20,14 @@ export default {
     ChangeUsernameForm,
     ChangePasswordForm,
     DeleteAccountForm,
+  },
+  methods: {
+    close() {
+      this.$emit('close');
+    },
+    home() {
+      this.$emit('home');
+    },
   },
 };
 </script>

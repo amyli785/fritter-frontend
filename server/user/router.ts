@@ -10,7 +10,7 @@ const router = express.Router();
 /**
  * View the user object associated with a username.
  * 
- * @name GET /api/user/:username
+ * @name GET /api/users/:username
  * 
  * @return {UserResponse} - an object with the user's details
  * @throws {404} - if the `username` does not exist
