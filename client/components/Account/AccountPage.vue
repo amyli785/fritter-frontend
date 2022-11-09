@@ -9,6 +9,7 @@
           @click="showEditRRPicture = true"
         >
           <RRPictureComponent class="invis-click"
+            :key="JSON.stringify($store.state.rrpictures)"
             :username="$store.state.username"
           />
         </div>
@@ -54,10 +55,12 @@
 		<NotLoggedIn v-else />
     <Modal
       v-if="showEditRRPicture"
-      title="Edit Profile Picture"
+      title="Update Profile Picture"
       @close="showEditRRPicture = false"
     >
-      Edit profile picture component
+      <UpdateRRPictureComponent 
+        @close="showEditRRPicture = false"
+      />
     </Modal>
     <Modal
       v-if="showEditAudienceGroups"
@@ -98,6 +101,7 @@ import NotLoggedIn from '../common/NotLoggedIn.vue';
 import Modal from '../common/Modal.vue';
 import RRPictureComponent from '../RRPicture/RRPictureComponent.vue';
 import UserFreets from '../User/UserFreets.vue';
+import UpdateRRPictureComponent from '../RRPicture/UpdateRRPictureComponent.vue';
 import UpdateGroupsComponent from '../Group/UpdateGroupsComponent.vue';
 import FollowersComponent from '../Follow/FollowersComponent.vue';
 import FollowingComponent from '../Follow/FollowingComponent.vue';
@@ -110,6 +114,7 @@ export default {
     Modal,
     RRPictureComponent,
     UserFreets,
+    UpdateRRPictureComponent,
     UpdateGroupsComponent,
     FollowersComponent,
     FollowingComponent,

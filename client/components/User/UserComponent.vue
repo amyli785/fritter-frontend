@@ -5,6 +5,7 @@
   >
     <div class="user-picture-container">
       <RRPictureComponent
+        :key="JSON.stringify($store.state.rrpictures)"
         :username="username"
       />
     </div>

@@ -18,6 +18,7 @@ const store = new Vuex.Store({
     currentFilter: filterAll,
     groups: [],
     freets: [], // All freets created in the app
+    rrpictures: [],
     username: null, // Username of the logged in user
     userId: null,
     alerts: {}, // global success/error messages encountered during submissions to non-visible forms
@@ -98,6 +99,24 @@ const store = new Vuex.Store({
       const url = state.currentFilter._id ? `/api/feed/${state.currentFilter._id}` : '/api/feed';
       const res = await fetch(url).then(async r => r.json());
       state.freets = res;
+    },
+    resetRRPictures(state) {
+      /**
+       * Reset the stored rrpictures to an empty object.
+       */
+      state.rrpictures = [];
+    },
+    addEntryToRRPictures(state, entry) {
+      /**
+       * Add the provided entry to the stored rrpictures.
+       * @param entry - entry to add: {username: String, rrpicture: RRPicture}
+       */
+      const entryExisting = state.rrpictures.find(entryExisting => entryExisting.username === entry.username);
+      if (entryExisting) {
+        entryExisting.rrpicture = entry.rrpicture;
+      } else {
+        state.rrpictures.push(entry);
+      }
     },
   },
   // Store data across page refreshes, only discard on browser close

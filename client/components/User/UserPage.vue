@@ -4,6 +4,7 @@
       <section class="account-header-container">
         <div class="account-picture-container">
           <RRPictureComponent
+            :key="JSON.stringify($store.state.rrpictures)"
             :username="username"
           />
         </div>

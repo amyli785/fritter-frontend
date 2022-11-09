@@ -1,16 +1,16 @@
 <template>
 	<article class="rrpicture-container">
-    <div v-if="!this.rrpicture">
+    <div v-if="!rrpicture">
       None
     </div>
-    <div v-else-if="this.rrpicture.pictureType === 'RawString'">
-      {{ this.rrpicture.picture }}
+    <div v-else-if="rrpicture.pictureType === 'RawString'">
+      {{ rrpicture.picture }}
       <!-- TODO: force text to fit -->
     </div>
     <img v-else
       class="rrpicture-image"
-      :src="this.rrpicture.picture"
-      :alt="`@${this.username}'s profile picture`"
+      :src="rrpicture.picture"
+      :alt="`@${username}'s profile picture`"
     />
   </article>
 </template>
@@ -23,6 +23,10 @@ export default {
       type: String,
       required: true,
     },
+    rrpictureOverwrite: {
+      type: Object,
+      default: undefined,
+    }
   },
   data() {
     return {
@@ -32,6 +36,18 @@ export default {
   },
   methods: {
     async getPicture() {
+      if (this.rrpictureOverwrite) {
+        this.rrpicture = this.rrpictureOverwrite;
+        return;
+      }
+
+      const rrpictureStored = this.$store.state.rrpictures.find(
+        entry => entry.username === this.username);
+      if (rrpictureStored) {
+        this.rrpicture = rrpictureStored.rrpicture;
+        return;
+      }
+
       const url = `/api/rrpictures/current/${this.username}`;
       try {
         const r = await fetch(url);
@@ -41,6 +57,7 @@ export default {
         }
 
         this.rrpicture = res;
+        this.$store.commit('addEntryToRRPictures', {username: this.username, rrpicture: res});
       } catch (e) {
         console.log(e);
         // TODO: deal with errors correctly
@@ -76,6 +93,11 @@ export default {
 .rrpicture-image {
   max-width: 100%;
   max-height: 100%;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
 }
 
 </style>

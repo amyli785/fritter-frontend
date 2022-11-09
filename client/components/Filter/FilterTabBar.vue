@@ -80,6 +80,7 @@
     mounted() {
       this.getFilters();
       this.$store.commit('refreshGroups');
+      this.$store.commit('resetRRPictures');
     }
   };
 </script>
