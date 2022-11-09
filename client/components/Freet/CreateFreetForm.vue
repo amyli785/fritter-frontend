@@ -68,8 +68,10 @@ export default {
         this.$store.commit('refreshFreets');
         this.$emit('done');
       } catch (e) {
-        console.log(e);
-        // TODO: deal with errors correctly
+        this.$store.commit('alert', {
+          message: e,
+          status: 'error',
+        });
       }
     },
   },

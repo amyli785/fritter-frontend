@@ -22,11 +22,6 @@
   export default {
     name: 'FeedFreets',
     components: {FreetComponent},
-    data() {
-      return {
-      alerts: {},
-      };
-    },
     methods: {
       async getFreets() {
         const url = this.$store.state.currentFilter._id ? `/api/feed/${this.$store.state.currentFilter._id}` : '/api/feed';
@@ -39,8 +34,10 @@
 
           this.$store.commit('updateFreets', res);
         } catch (e) {
-          this.$set(this.alerts, e, 'error');
-          setTimeout(() => this.$delete(this.alerts, e), 3000);
+          this.$store.commit('alert', {
+            message: e,
+            status: 'error',
+          });
         }
       },
     },

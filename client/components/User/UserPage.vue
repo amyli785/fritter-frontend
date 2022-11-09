@@ -47,7 +47,6 @@ export default {
     return {
       username: this.$route.params.username,
       userId: '',
-      alerts: {},
     };
   },
   methods: {
@@ -67,8 +66,10 @@ export default {
 
         this.userId = res._id;
       } catch (e) {
-        this.$set(this.alerts, e, 'error');
-        setTimeout(() => this.$delete(this.alerts, e), 3000);
+        this.$store.commit('alert', {
+          message: e,
+          status: 'error',
+        });
       }
     },
   },

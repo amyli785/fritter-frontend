@@ -17,11 +17,6 @@
     required: true
     }
   },
-  data() {
-    return {
-    alerts: {},
-    };
-  },
   methods: {
     onClick() {
       this.$store.commit('updateCurrentFilter', this.filter);

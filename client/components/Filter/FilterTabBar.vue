@@ -51,7 +51,6 @@
     data() {
       return {
         updatingFilters: false,
-        alerts: {},
       };
     },
     methods: {
@@ -66,8 +65,10 @@
           this.$store.commit('updateCustomFilters', res);
         }
         catch(e) {
-          console.log(e);
-          // TODO: deal with errors correctly
+          this.$store.commit('alert', {
+            message: e,
+            status: 'error',
+          });
         }
       },
       startUpdateFilters() {
@@ -96,10 +97,6 @@
 
   .filter-tab-selected {
     border-color: #000;
-  }
-
-  .alerts {
-    width: 25%;
   }
 </style>
   

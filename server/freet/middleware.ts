@@ -176,9 +176,7 @@ const areFreetsExistViewable = async (req: Request, res: Response, next: NextFun
   
   if (!existsViewable) {
     res.status(404).json({
-      error: {
-        freetNotFound: `A freet in freetIds does not exist or cannot be accessed by the user.`
-      }
+      error: `A freet in freetIds does not exist or cannot be accessed by the user.`
     });
     return;
   }

@@ -11,9 +11,7 @@ const isNameValid = (req: Request, res: Response, next: NextFunction) => {
   const nameRegex = /^\w+$/;
   if (!nameRegex.test(req.body.name)) {
     res.status(400).json({
-      error: {
-        name: 'Name must be a nonempty alphanumeric string.'
-      }
+      error: 'Name must be a nonempty alphanumeric string.'
     });
     return;
   }
@@ -28,9 +26,7 @@ const isNameNotAlreadyInUse = async (req: Request, res: Response, next: NextFunc
 
   if (group) {
     res.status(409).json({
-      error: {
-        name: 'A group with this name already exists for this user.'
-      }
+      error: 'A group with this name already exists for this user.'
     });
     return;
   }
@@ -69,7 +65,7 @@ const isMemberValid = async (req: Request, res: Response, next: NextFunction) =>
   const member = await UserCollection.findOneByUsername(memberUsername as string);
   if (!member) {
     res.status(404).json({
-      error: `A user with id ${memberUsername as string} does not exist.`
+      error: `A user with username ${memberUsername as string} does not exist.`
     });
     return;
   }

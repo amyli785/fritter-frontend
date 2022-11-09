@@ -11,7 +11,7 @@ export default {
       hasBody: true,
       fields: [
         {id: 'expression', label: 'expression', value: ''},
-        {id: 'name', label: 'eame', value: ''}
+        {id: 'name', label: 'name', value: ''}
       ],
       title: "Create New Filter",
       submitText: "Create",

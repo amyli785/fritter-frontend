@@ -36,7 +36,6 @@ export default {
   data() {
     return {
       rrpicture: {},
-      alerts: {},
     };
   },
   methods: {
@@ -64,8 +63,10 @@ export default {
         this.rrpicture = res;
         this.$store.commit('addEntryToRRPictures', {username: this.username, rrpicture: res});
       } catch (e) {
-        console.log(e);
-        // TODO: deal with errors correctly
+        this.$store.commit('alert', {
+          message: e,
+          status: 'error',
+        });
       }
     },
   },

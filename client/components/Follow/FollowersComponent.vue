@@ -31,8 +31,10 @@ export default {
 
         this.followers = res;
       } catch (e) {
-        console.log(e);
-        // TODO: deal with errors correctly
+        this.$store.commit('alert', {
+          message: e,
+          status: 'error',
+        });
       }
     }
   },

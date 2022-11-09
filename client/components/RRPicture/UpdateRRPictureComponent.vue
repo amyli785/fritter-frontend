@@ -105,8 +105,10 @@ export default {
         this.rrpictureCurrent = res;
         this.$store.commit('addEntryToRRPictures', {username: username, rrpicture: res});
       } catch (e) {
-        console.log(e);
-        // TODO: deal with errors correctly
+        this.$store.commit('alert', {
+          message: e,
+          status: 'error',
+        });
       }
     },
     async getPreviousList() {
@@ -120,8 +122,10 @@ export default {
 
         this.rrpicturePreviousList = res;
       } catch (e) {
-        console.log(e);
-        // TODO: deal with errors correctly
+        this.$store.commit('alert', {
+          message: e,
+          status: 'error',
+        });
       }
     },
     doneCurrent() {
