@@ -22,63 +22,25 @@
       title="Update Filters"
       @close="stopUpdateFilters"
     >
-      <section class="filter-tab-modal-bar">
-        <button
-          v-for="filter in filters"
-          :class="'round-click ' + (filter._id === filterEditing._id ? 'filter-tab-modal-bar-selected' : '')"
-          :key="'option ' + filter._id"
-          @click="filterEditing = filter"
-        >
-          {{ filter.name }}
-        </button>
-        <button
-          :class="'round-click ' + (!filterEditing? 'filter-tab-modal-bar-selected' : '')"
-          @click="filterEditing = false"
-        >
-          + New Filter
-        </button>
-      </section>
-      <section v-if="!filterEditing" class="filter-tab-modal-content">
-        <CreateFilterForm 
-          submitText=""
-          @done="stopUpdateFilters"
-        />
-      </section>
-      <section v-else class="filter-tab-modal-content">
-        <div class="filter-tab-modal-editing-current-container">
-          <h3 class="filter-tab-modal-editing-current-header">Current Expression</h3>
-          <p class="filter-tab-modal-editing-current-body">{{filterEditing.expression}}</p>
-        </div>
-        <DeleteFilterForm class="filter-tab-modal-editing-delete"
-          :key="'delete ' + filterEditing._id"
-          :filter="filterEditing"
-          @done="stopUpdateFilters"
-        />
-        <EditFilterForm class="filter-tab-modal-editing-edit"
-          :key="'edit ' + filterEditing._id"
-          :filter="filterEditing"
-          @done="stopUpdateFilters"
-        />
-      </section>
+      <UpdateFilterTabComponent
+        :filters="filters"
+        @done="stopUpdateFilters"
+      />
     </Modal>
   </section>
 </template>
   
 <script>
-  import FilterTabComponent from '../Filter/FilterTabComponent.vue';
-  import CreateFilterForm from '../Filter/CreateFilterForm.vue';
-  import EditFilterForm from '../Filter/EditFilterForm.vue';
-  import DeleteFilterForm from '../Filter/DeleteFilterForm.vue';
   import Modal from '../common/Modal.vue';
+  import FilterTabComponent from '../Filter/FilterTabComponent.vue';
+  import UpdateFilterTabComponent from '../Filter/UpdateFilterTabComponent.vue';
   
   export default {
     name: 'FilterTabBar',
     components: {
+      Modal,
       FilterTabComponent,
-      CreateFilterForm,
-      EditFilterForm,
-      DeleteFilterForm,
-      Modal
+      UpdateFilterTabComponent,
     },
     props: {
       filters: {
@@ -89,7 +51,6 @@
     data() {
       return {
         updatingFilters: false,
-        filterEditing: false,
         alerts: {},
       };
     },
@@ -105,17 +66,15 @@
           this.$store.commit('updateCustomFilters', res);
         }
         catch(e) {
-          this.$set(this.alerts, e, 'error');
-          setTimeout(() => this.$delete(this.alerts, e), 3000);
+          console.log(e);
+          // TODO: deal with errors correctly
         }
       },
       startUpdateFilters() {
         this.updatingFilters = true;
-        this.filterEditing = false;
       },
       stopUpdateFilters() {
         this.updatingFilters = false;
-        this.filterEditing = false;
       },
     },
     mounted() {
@@ -133,71 +92,7 @@
     gap: 1vmax;
   }
 
-  .filter-tab-modal-bar {
-    width: 100%;
-
-	  display: flex;
-    flex-direction: row;
-	  justify-content: flex-start;
-	  align-items: center;
-    gap: 1vmax;
-  }
-
-  .filter-tab-modal-content {
-    width: 100%;
-
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: stretch;
-    gap: 1vmax;
-  }
-
-  .filter-tab-modal-editing-current-container {
-    flex-basis: 50%;
-    flex-grow: 1;
-    flex-shrink: 1;
-    
-    margin: 0;
-    padding: 1vmax;
-
-    background-color: #E8ECED;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 1vmax;
-  }
-
-  .filter-tab-modal-editing-current-header {
-    margin: 0;
-    padding: 0;
-  }
-  
-  .filter-tab-modal-editing-current-body {
-    margin: 0;
-    padding: 1vmax 0;
-
-    font-size: medium;
-  }
-
-  .filter-tab-modal-editing-delete {
-    flex-basis: 10%;
-    flex-shrink: 0;
-  }
-
-  .filter-tab-modal-editing-edit {
-    flex-basis: 100%;
-    flex-shrink: 0;
-  }
-
   .filter-tab-selected {
-    border-color: #000;
-  }
-
-  .filter-tab-modal-bar-selected {
     border-color: #000;
   }
 
