@@ -158,6 +158,9 @@ main {
   width: 100%;
   margin: 0;
   padding: 0;
+
+  font-size: small;
+  line-height: 1.5;
 }
 
 .form-fields-container {
