@@ -58,7 +58,7 @@ export default {
   width: 50%;
   max-height: 100%;
   overflow: auto;
-  padding: 1vw;
+  padding: 1vmax;
   background-color: #fff;
   transition: none 0s;
 
@@ -86,13 +86,13 @@ export default {
   height: 100%;
   width: 100%;
 
-  margin: 1vw 0vw 0vw;
+  margin: 1vmax 0 0;
 
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  gap: 1vw;
+  gap: 1vmax;
 }
 
 .round-click, .round-click:link, .round-click:hover, .round-click:visited {

@@ -32,12 +32,12 @@ export default {
   justify-content: flex-start;
   align-items: center;
 
-  gap: 12pt;
+  gap: 1vmax;
 }
 
 .user-picture-container {
-  width: 20vmin;
-  height: 20vmin;
+  width: 6vmax;
+  height: 6vmax;
 }
 
 </style>

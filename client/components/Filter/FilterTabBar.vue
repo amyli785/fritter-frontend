@@ -130,7 +130,7 @@
     flex-direction: row;
 	  justify-content: space-between;
 	  align-items: center;
-    gap: 1vw;
+    gap: 1vmax;
   }
 
   .filter-tab-modal-bar {
@@ -140,7 +140,7 @@
     flex-direction: row;
 	  justify-content: flex-start;
 	  align-items: center;
-    gap: 1vw;
+    gap: 1vmax;
   }
 
   .filter-tab-modal-content {
@@ -151,7 +151,7 @@
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: stretch;
-    gap: 1vw;
+    gap: 1vmax;
   }
 
   .filter-tab-modal-editing-current-container {
@@ -160,7 +160,7 @@
     flex-shrink: 1;
     
     margin: 0;
-    padding: 1vw;
+    padding: 1vmax;
 
     background-color: #E8ECED;
 
@@ -168,7 +168,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    gap: 1vw;
+    gap: 1vmax;
   }
 
   .filter-tab-modal-editing-current-header {
@@ -178,7 +178,7 @@
   
   .filter-tab-modal-editing-current-body {
     margin: 0;
-    padding: 1vw 0;
+    padding: 1vmax 0;
 
     font-size: medium;
   }

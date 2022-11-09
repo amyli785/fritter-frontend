@@ -79,7 +79,7 @@ export default {
 
 <style scoped>
 nav {
-  padding: 1vw 2vw;
+  padding: 1vmax 2vmax;
   background-color: #3C9EB9;
   display: flex;
   justify-content: space-between;
@@ -103,7 +103,7 @@ nav {
   flex-direction: row;
   justify-content: flex-end;
 	align-items: center;
-  gap: 1vw;
+  gap: 1vmax;
 }
 
 .alerts {

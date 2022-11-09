@@ -42,7 +42,7 @@ export default {
   justify-content: center;
   align-items: stretch;
 
-  gap: 1vw;
+  gap: 1vmax;
 }
 
 .account-settings-logout {

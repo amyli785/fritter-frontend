@@ -1,18 +1,22 @@
 <template>
 	<main>
     <div v-if="userId" class="user-page-container">
-      <section class="user-header-container">
-        <RRPictureComponent class="user-picture-container"
-          :username="username"
-        />
-        <h3 class="user-handle">
+      <section class="account-header-container">
+        <div class="account-picture-container">
+          <RRPictureComponent
+            :username="username"
+          />
+        </div>
+        <h3 class="account-handle">
         @{{ username }}
         </h3>
-        <UserUnFollowButton
-          v-if="$store.state.username"
-          class="round-click user-un-follow-button"
-          :username="username"
-        />
+        <div class="account-button-row-container">
+          <UserUnFollowButton
+            v-if="$store.state.username"
+            class="round-click"
+            :username="username"
+          />
+        </div>
       </section>
       <UserFreets v-if="$store.state.username"
         :username="username"
@@ -90,29 +94,6 @@ export default {
 .user-page-container {
   margin: 0;
   padding: 0;
-}
-
-.user-header-container {
-  margin: 24pt 0;
-  padding: 12pt;
-
-  background-color: #b2dbe6;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 12pt;
-}
-
-.user-handle {
-  margin: 0;
-  padding: 0;
-}
-
-.user-picture-container {
-  width: 120pt;
-  height: 120pt;
 }
 
 </style>

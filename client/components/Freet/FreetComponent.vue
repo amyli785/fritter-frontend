@@ -54,8 +54,8 @@ export default {
 
 <style scoped>
 .freet {
-    border: 1px solid #111;
-    padding: 20px;
+    background-color: #E8ECED;
+    padding: 2vmax;
     position: relative;
 }
 </style>

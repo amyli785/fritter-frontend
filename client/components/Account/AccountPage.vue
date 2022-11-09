@@ -5,13 +5,13 @@
   <main>
     <div v-if="$store.state.username" class="account-page-container">
       <section class="account-header-container">
-        <button class="invis-click"
+        <div class="account-picture-container"
           @click="showEditRRPicture = true"
         >
-          <RRPictureComponent class="account-picture-container"
+          <RRPictureComponent class="invis-click"
             :username="$store.state.username"
           />
-        </button>
+        </div>
         <h3 class="account-handle" :key="$store.state.username">
         @{{ $store.state.username }}
         </h3>
@@ -122,7 +122,6 @@ export default {
   methods: {
     home() {
       this.$router.push({name: 'Home'});
-      // this.$emit('close');
     }
   }
 };
@@ -133,37 +132,6 @@ export default {
 .account-page-container {
   margin: 0;
   padding: 0;
-}
-
-.account-header-container {
-  margin: 24pt 0;
-  padding: 12pt;
-
-  background-color: #b2dbe6;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 12pt;
-}
-
-.account-handle {
-  margin: 0;
-  padding: 0;
-}
-
-.account-button-row-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 1vw;
-}
-
-.account-picture-container {
-  width: 120pt;
-  height: 120pt;
 }
 
 </style>

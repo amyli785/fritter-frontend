@@ -48,7 +48,7 @@ body {
 }
 
 main {
-  padding: 0 5em 5em;
+  padding: 0 6vw 6vw;
 }
 
 .alerts {
@@ -63,8 +63,7 @@ main {
 }
 
 .alerts article {
-  border-radius: 5px;
-  padding: 10px 20px;
+  padding: 2vmax 2vmax;
   color: #fff;
 }
 
@@ -81,12 +80,12 @@ main {
 }
 
 .round-click, .round-click:link, .round-click:hover, .round-click:visited {
-  padding: 1vw;
-	margin: 0vw 0vw;
-  border-radius: 2vw;
+  padding: 1vmax;
+	margin: 0;
+  border-radius: 2vmax;
   background-color: #fff;
 
-  border: 2pt solid #fff;
+  border: 0.2vmax solid #fff;
 
   white-space: nowrap;
   color: #000;
@@ -99,6 +98,9 @@ main {
 }
 
 .invis-click, .invis-click:link, .invis-click:hover, .invis-click:visited {
+  margin: 0;
+  padding: 0;
+  
   border: none;
 
   color: #000;
@@ -115,7 +117,7 @@ main {
   width: 100%;
   
   margin: 0;
-  padding: 1vw;
+  padding: 1vmax;
 
   background-color: #E8ECED;
 
@@ -123,7 +125,7 @@ main {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  gap: 1vw;
+  gap: 1vmax;
 }
 
 .form-title {
@@ -144,13 +146,13 @@ main {
 
   display: flex;
   flex-direction: column;
-  gap: 0.4vw;
+  gap: 0.4vmax;
 }
 
 .form-field-container {
   display: flex;
   flex-direction: column;
-  gap: 0.2vw;
+  gap: 0.2vmax;
 }
 
 .form-field-label {
@@ -160,6 +162,37 @@ main {
 .form-field-input {
   font-size: medium;
   padding: 0.4em;
+}
+
+.account-header-container {
+  margin: 6vh 0;
+  padding: 2vw;
+
+  background-color: #b2dbe6;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1vmax;
+}
+
+.account-picture-container {
+  width: 8vmax;
+  height: 8vmax;
+}
+
+.account-handle {
+  margin: 0;
+  padding: 0;
+}
+
+.account-button-row-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1vmax;
 }
 
 </style>
