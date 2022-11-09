@@ -22,7 +22,7 @@
         >
           <option disabled selected value>select a group to post to</option>
           <option
-            v-for="group in this.groups"
+            v-for="group in $store.state.groups"
             :key="group._id"
             :value="group._id"
             @click="audience = $event.target.value"
@@ -43,25 +43,9 @@ export default {
     return {
       content: "",
       audience: "",
-      groups: {},
     }
   },
   methods: {
-    async getGroups() {
-      const url = '/api/groups';
-      try {
-        const r = await fetch(url);
-        if (!r.ok) {
-          const res = await r.json();
-          throw new Error(res.error);
-        }
-        const res = await r.json();
-        this.groups = res;
-      } catch(e) {
-        console.log(e);
-        // TODO: deal with errors correctly
-      }
-    },
     async submit() {
       const url = '/api/freets';
       const httpBody = {
@@ -88,9 +72,6 @@ export default {
         // TODO: deal with errors correctly
       }
     },
-  },
-  mounted() {
-    this.getGroups();
   },
 };
 </script>

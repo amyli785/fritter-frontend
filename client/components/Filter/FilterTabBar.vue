@@ -79,6 +79,7 @@
     },
     mounted() {
       this.getFilters();
+      this.$store.commit('refreshGroups');
     }
   };
 </script>

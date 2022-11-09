@@ -20,7 +20,7 @@
             class="round-click"
             @click="showEditAudienceGroups = true"
           >
-            Edit Audience Groups
+            Update Audience Groups
           </button>
         </div>
         <div class="account-button-row-container">
@@ -61,10 +61,13 @@
     </Modal>
     <Modal
       v-if="showEditAudienceGroups"
-      title="Edit Audience Groups"
+      title="Update Audience Groups"
       @close="showEditAudienceGroups = false"
     >
-      Edit audience groups component
+      <UpdateGroupsComponent
+        :groups="$store.state.groups"
+        @close="showEditAudienceGroups = false"
+      />
     </Modal>
     <Modal
       v-if="showFollowers"
@@ -95,6 +98,7 @@ import NotLoggedIn from '../common/NotLoggedIn.vue';
 import Modal from '../common/Modal.vue';
 import RRPictureComponent from '../RRPicture/RRPictureComponent.vue';
 import UserFreets from '../User/UserFreets.vue';
+import UpdateGroupsComponent from '../Group/UpdateGroupsComponent.vue';
 import FollowersComponent from '../Follow/FollowersComponent.vue';
 import FollowingComponent from '../Follow/FollowingComponent.vue';
 import AccountSettingsComponent from '../Account/AccountSettingsComponent.vue';
@@ -106,6 +110,7 @@ export default {
     Modal,
     RRPictureComponent,
     UserFreets,
+    UpdateGroupsComponent,
     FollowersComponent,
     FollowingComponent,
     AccountSettingsComponent,
